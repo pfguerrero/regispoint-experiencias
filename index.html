@@ -1,0 +1,1580 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regis Point Concierge</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#0B0B0B}
+*{box-sizing:border-box}
+button{font-family:inherit}
+a{color:inherit}
+img{display:block}
+.btn{transition:transform .15s ease}
+.tile{transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.tile:hover{transform:translateY(-5px);border-color:#F2B544 !important;box-shadow:0 10px 28px rgba(242,181,68,0.18)}
+.scr > div{padding-top:48px !important}
+.btn:hover{transform:translateY(-2px)}
+.card{transition:transform .25s ease}
+.card:hover{transform:translateY(-6px)}
+.pic{transition:transform .5s ease;filter:saturate(1.05) contrast(1.03) sepia(.08)}
+.arch:hover .pic{transform:scale(1.05)}
+a:focus-visible,button:focus-visible{outline:3px solid #F2B544;outline-offset:3px}
+@media (max-width:820px){.navlinks{display:none !important}.herocol{padding-bottom:24px !important}.heroimg{display:none !important}}
+</style>
+
+</head>
+<body>
+<div id="app"></div>
+<template id="tpl">
+
+
+<div style="width: 100%; font-family: 'Jost', system-ui, sans-serif; color: #F6EBD9; background: #0B0B0B">
+
+<sc-if value="{{isHome}}" hint-placeholder-val="{{true}}">
+<!-- HERO -->
+<header style="position: relative; overflow: hidden; background: #0B0B0B">
+<div style="position: absolute; left: -260px; top: -200px; width: 720px; height: 720px; border-radius: 50%; border: 2px solid rgba(246,235,217,0.1)"></div>
+<div style="position: absolute; left: -160px; top: -100px; width: 520px; height: 520px; border-radius: 50%; border: 2px solid rgba(246,235,217,0.14)"></div>
+
+<div style="position: relative; max-width: 1280px; margin: 0 auto; padding: 28px 32px 0 32px">
+
+<nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 16px 28px">
+<div class="navlinks" style="display: flex; align-items: center; gap: 28px; font-size: 16px; font-weight: 500">
+<a href="#" onClick="{{goTransfers}}" style="text-decoration: none; color: #F6EBD9">{{t.navTransfers}}</a>
+<a href="#" onClick="{{goBeaches}}" style="text-decoration: none; color: #F6EBD9">{{t.tileBeaches}}</a>
+<a href="#" onClick="{{goTours}}" style="text-decoration: none; color: #F6EBD9">{{t.navTours}}</a>
+<a href="#" onClick="{{goCooking}}" style="text-decoration: none; color: #F6EBD9">{{t.navCooking}}</a>
+<a href="#" onClick="{{goPackages}}" style="text-decoration: none; color: #F6EBD9">{{t.navPackages}}</a>
+</div>
+<a class="btn" href="#" onClick="{{goGuestCI}}" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border: 2.5px solid #F2B544; border-radius: 6px; color: #F6EBD9; font-size: 16px; font-weight: 700; letter-spacing: 0.04em; text-decoration: none">{{t.tabGC}}</a>
+<div style="display: flex; align-items: center; gap: 4px; padding: 4px; border: 1.5px solid rgba(246,235,217,0.4); border-radius: 999px">
+<button onClick="{{setEn}}" aria-pressed="{{isEn}}" style="min-height: 36px; min-width: 44px; border: 0; border-radius: 999px; cursor: pointer; font-size: 14px; font-weight: 600; background: {{enBg}}; color: {{enFg}}">EN</button>
+<button onClick="{{setEs}}" aria-pressed="{{isEs}}" style="min-height: 36px; min-width: 44px; border: 0; border-radius: 999px; cursor: pointer; font-size: 14px; font-weight: 600; background: {{esBg}}; color: {{esFg}}">ES</button>
+</div>
+<a class="btn" href="#" onClick="{{goPlan}}" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 22px; border-radius: 999px; background: #F2B544; color: #0B0B0B; font-size: 16px; font-weight: 600; text-decoration: none">{{t.navPlan}}</a>
+</div>
+</nav>
+
+<div id="top" style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 48px; padding-top: 64px">
+
+<div class="herocol" style="flex: 1 1 560px; min-width: 0; padding-bottom: 96px; display: flex; flex-direction: column; gap: 30px">
+<div style="display: flex; align-items: center; gap: clamp(12px, 2vw, 26px); align-self: flex-start; max-width: 100%">
+<div style="position: relative; flex: none; width: clamp(104px, 13vw, 156px); aspect-ratio: 1 / 1">
+<svg viewBox="0 0 160 160" aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%">
+<defs>
+<linearGradient id="rpgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6DE97"/><stop offset="0.5" stop-color="#B98A3A"/><stop offset="1" stop-color="#F2D78C"/></linearGradient>
+<radialGradient id="rpfill" cx="50%" cy="38%" r="70%"><stop offset="0" stop-color="#222222"/><stop offset="1" stop-color="#050505"/></radialGradient>
+</defs>
+<circle cx="80" cy="80" r="77" fill="url(#rpfill)" stroke="url(#rpgold)" stroke-width="2.4"/>
+<circle cx="80" cy="80" r="69" fill="none" stroke="url(#rpgold)" stroke-width="0.9" opacity="0.7"/>
+<circle cx="80" cy="3" r="2.2" fill="#F2D78C"/>
+<circle cx="80" cy="157" r="2.2" fill="#F2D78C"/>
+</svg>
+<img src="img/8d5605ab82d7656d7c5ab0487f0dde1c.png" alt="RP monogram" style="position: absolute; left: 50%; top: 50%; height: 62%; width: auto; transform: translate(-50%, -50%)">
+</div>
+<div aria-hidden="true" style="flex: none; width: 1px; height: clamp(40px, 6vw, 64px); background: linear-gradient(180deg, rgba(242,215,140,0), rgba(242,215,140,0.8), rgba(242,215,140,0))"></div>
+<img src="img/cbaa8357ee0e737e7bfb1f0ea6cfa8a4.png" alt="Regis Point" style="height: clamp(26px, 6vw, 60px); width: auto; flex: none">
+</div>
+<div style="font-size: 15px; font-weight: 600; letter-spacing: 0.26em; color: #F2B544">{{t.eyebrow}}</div>
+<h1 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(48px, 6.2vw, 96px); line-height: 0.95; letter-spacing: -0.03em; color: #F6EBD9; text-wrap: balance">{{t.h1a}} <span style="font-style: italic; font-weight: 500; color: #F2B544">{{t.h1b}}</span></h1>
+<p style="margin: 0; max-width: 540px; font-size: 22px; line-height: 1.5; color: #F6EBD9; text-wrap: pretty">{{t.heroSub}}</p>
+<div style="display: flex; flex-direction: column; gap: 18px; max-width: 560px; padding: 28px 30px 30px 30px; background: #F6EBD9; color: #0B0B0B">
+<div style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 32px; line-height: 1.05">{{t.heroQ}}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px" role="group" aria-label="{{t.heroQ}}">
+<sc-for list="{{guestChips}}" as="x" hint-placeholder-count="7">
+<button onClick="{{x.pick}}" aria-pressed="{{x.on}}" style="width: 52px; height: 52px; border-radius: 50%; cursor: pointer; font-size: 20px; font-weight: 600; border: 1.5px solid #0B0B0B; background: {{x.bg}}; color: {{x.fg}}">{{x.label}}</button>
+</sc-for>
+</div>
+<div style="font-size: 16px; line-height: 1.4">{{heroHint}}</div>
+<a class="btn" href="#menu" style="display: inline-flex; align-items: center; justify-content: center; min-height: 58px; padding: 0 30px; border-radius: 999px; background: #0B0B0B; color: #F6EBD9; font-size: 18px; font-weight: 600; text-decoration: none; text-align: center">{{t.heroSee}}</a>
+</div>
+</div>
+
+<div class="heroimg" style="position: relative; flex: 1 1 440px; max-width: 520px; margin: 0 auto; min-width: 0; height: 700px; align-self: flex-end">
+<div style="position: absolute; left: 50%; bottom: 0; width: 440px; max-width: 88%; aspect-ratio: 440 / 670; transform: translateX(-50%); filter: drop-shadow(0 24px 32px rgba(0,0,0,0.4))">
+<div aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 999px 999px 0 0; background: linear-gradient(90deg, #C9A872 0%, #E9D5AF 28%, #EFDDB8 50%, #E9D5AF 72%, #C4A06B 100%)"></div>
+<div class="arch" style="position: absolute; left: 5%; right: 5%; top: 3.28%; bottom: 0; border-radius: 999px 999px 0 0; overflow: hidden; background: #222222">
+<img class="pic" src="img/a956ec1169e84b030d7ccd24a7a933b9.jpg" alt="Columbus statue and the Zona Colonial at sunset" style="position: absolute; left: -39.6%; top: -4.8%; width: 140%; height: auto; max-width: none">
+</div>
+<svg viewBox="0 0 440 670" aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none">
+<polygon points="194.2,23.7 191.3,1.9 248.7,1.9 245.8,23.7" fill="#C9A66F"/>
+<path d="M28.7 168.8L7.5 163.1M48.5 121.0L29.5 110.0M80.0 80.0L64.4 64.4M121.0 48.5L110.0 29.5M168.8 28.7L163.1 7.5M271.2 28.7L276.9 7.5M319.0 48.5L330.0 29.5M360.0 80.0L375.6 64.4M391.5 121.0L410.5 110.0M411.3 168.8L432.5 163.1M168.8 28.7L163.1 7.5M271.2 28.7L276.9 7.5" stroke="#9C7C4A" stroke-width="1.6" fill="none"/>
+<path d="M0 275H22M418 275H440M0 330H22M418 330H440M0 385H22M418 385H440M0 440H22M418 440H440M0 495H22M418 495H440M0 550H22M418 550H440M0 605H22M418 605H440M0 660H22M418 660H440" stroke="#9C7C4A" stroke-width="1.6" fill="none"/>
+<path d="M22 670V220A198 198 0 0 1 418 220V670" fill="none" stroke="#5A4120" stroke-opacity="0.55" stroke-width="3"/>
+<path d="M1 670V220A219 219 0 0 1 439 220V670" fill="none" stroke="#F6E7C6" stroke-width="2"/>
+</svg>
+<div style="position: absolute; left: -44px; top: 150px; width: 132px; height: 132px; border-radius: 50%; background: #F2B544; color: #0B0B0B; display: flex; align-items: center; justify-content: center; padding: 18px; text-align: center; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 19px; line-height: 1.1">{{t.badge}}</div>
+</div>
+</div>
+
+</div>
+</div>
+</header>
+
+<section id="menu" style="background: #0B0B0B; color: #F6EBD9">
+<div style="max-width: 1280px; margin: 0 auto; padding: 24px 20px 80px 20px; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(36px, 5vw, 64px); line-height: 1; letter-spacing: -0.02em">{{t.menuTitle}}</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.45; color: #F6EBD9">{{t.menuSub}}</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px">
+<button class="tile" onClick="{{goTransfers}}" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 10px; min-height: 236px; padding: 38px 12px 22px 12px; border: 1.5px solid rgba(242,181,68,0.6); border-radius: 999px 999px 20px 20px; background: linear-gradient(180deg, #1B1B1B, #0F0F0F); color: #F6EBD9; cursor: pointer; text-align: center">
+<svg viewBox="0 0 48 48" width="64" height="64" aria-hidden="true" fill="none" stroke="#F2B544" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 4 C26.5 4 27.5 7 27.5 11 V19 L44 29 V33 L27.5 28.5 V38 L32 41.5 V44 L24 42 L16 44 V41.5 L20.5 38 V28.5 L4 33 V29 L20.5 19 V11 C20.5 7 21.5 4 24 4 Z"/></svg>
+<span style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 24px; line-height: 1.05">{{t.tileAirport}}</span>
+<span style="display: block; min-height: 37px; font-size: 14px; line-height: 1.3; font-weight: 500; color: #F2B544">{{tileSub.airport}}</span>
+</button>
+<button class="tile" onClick="{{goBeaches}}" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 10px; min-height: 236px; padding: 38px 12px 22px 12px; border: 1.5px solid rgba(242,181,68,0.6); border-radius: 999px 999px 20px 20px; background: linear-gradient(180deg, #1B1B1B, #0F0F0F); color: #F6EBD9; cursor: pointer; text-align: center">
+<svg viewBox="0 0 48 48" width="64" height="64" aria-hidden="true" fill="none" stroke="#F2B544" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="10" r="4.5"/><path d="M23 40 C23 31 25 23 30 15"/><path d="M30 15 C25 9 17 10 12 16 M30 15 C31 8 37 5 43 7 M30 15 C36 12 43 15 45 21 M30 15 C26 17 21 21 19 27"/><path d="M3 41 Q7.5 37.5 12 41 T21 41 T30 41 T39 41 T47 41"/></svg>
+<span style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 24px; line-height: 1.05">{{t.tileBeaches}}</span>
+<span style="display: block; min-height: 37px; font-size: 14px; line-height: 1.3; font-weight: 500; color: #F2B544">{{tileSub.beaches}}</span>
+</button>
+<button class="tile" onClick="{{goTours}}" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 10px; min-height: 236px; padding: 38px 12px 22px 12px; border: 1.5px solid rgba(242,181,68,0.6); border-radius: 999px 999px 20px 20px; background: linear-gradient(180deg, #1B1B1B, #0F0F0F); color: #F6EBD9; cursor: pointer; text-align: center">
+<svg viewBox="0 0 48 48" width="64" height="64" aria-hidden="true" fill="none" stroke="#F2B544" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="19"/><circle cx="24" cy="24" r="2"/><path d="M31 17 L27 27 L17 31 L21 21 Z"/><path d="M24 5 V9 M24 39 V43 M5 24 H9 M39 24 H43"/></svg>
+<span style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 24px; line-height: 1.05">{{t.tileTours}}</span>
+<span style="display: block; min-height: 37px; font-size: 14px; line-height: 1.3; font-weight: 500; color: #F2B544">{{tileSub.tours}}</span>
+</button>
+<button class="tile" onClick="{{goCooking}}" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 10px; min-height: 236px; padding: 38px 12px 22px 12px; border: 1.5px solid rgba(242,181,68,0.6); border-radius: 999px 999px 20px 20px; background: linear-gradient(180deg, #1B1B1B, #0F0F0F); color: #F6EBD9; cursor: pointer; text-align: center">
+<svg viewBox="0 0 48 48" width="64" height="64" aria-hidden="true" fill="none" stroke="#F2B544" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 31 C8.5 31 6 23 12 20.5 C11 13 20 9.5 24 14 C28 9.5 37 13 36 20.5 C42 23 39.5 31 33 31 Z"/><path d="M15 31 V41 H33 V31"/><path d="M20 35 H28"/></svg>
+<span style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 24px; line-height: 1.05">{{t.tileCooking}}</span>
+<span style="display: block; min-height: 37px; font-size: 14px; line-height: 1.3; font-weight: 500; color: #F2B544">{{tileSub.cooking}}</span>
+</button>
+<button class="tile" onClick="{{goSpa}}" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 10px; min-height: 236px; padding: 38px 12px 22px 12px; border: 1.5px solid rgba(242,181,68,0.6); border-radius: 999px 999px 20px 20px; background: linear-gradient(180deg, #1B1B1B, #0F0F0F); color: #F6EBD9; cursor: pointer; text-align: center">
+<svg viewBox="0 0 48 48" width="64" height="64" aria-hidden="true" fill="none" stroke="#F2B544" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 7 C30 14 30 26 24 33 C18 26 18 14 24 7 Z"/><path d="M24 33 C16 32 9.5 27 8 18 C15.5 18 21.5 23 24 33 Z"/><path d="M24 33 C32 32 38.5 27 40 18 C32.5 18 26.5 23 24 33 Z"/><path d="M11 38 Q17.5 35 24 38 T37 38"/><path d="M15 43 H33"/></svg>
+<span style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 24px; line-height: 1.05">{{t.tileSpa}}</span>
+<span style="display: block; min-height: 37px; font-size: 14px; line-height: 1.3; font-weight: 500; color: #F2B544">{{tileSub.spa}}</span>
+</button>
+<button class="tile" onClick="{{goCheckin}}" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 10px; min-height: 236px; padding: 38px 12px 22px 12px; border: 1.5px solid rgba(242,181,68,0.6); border-radius: 999px 999px 20px 20px; background: linear-gradient(180deg, #1B1B1B, #0F0F0F); color: #F6EBD9; cursor: pointer; text-align: center">
+<svg viewBox="0 0 48 48" width="64" height="64" aria-hidden="true" fill="none" stroke="#F2B544" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="26" r="16"/><path d="M24 16 V26 L31 30"/><path d="M19 5 H29"/><path d="M6 8 L11 12 M42 8 L37 12"/></svg>
+<span style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 24px; line-height: 1.05">{{t.tileCheckin}}</span>
+<span style="display: block; min-height: 37px; font-size: 14px; line-height: 1.3; font-weight: 500; color: #F2B544">{{tileSub.checkin}}</span>
+</button>
+<button class="tile" onClick="{{goPackages}}" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 10px; min-height: 236px; padding: 38px 12px 22px 12px; border: 1.5px solid rgba(242,181,68,0.6); border-radius: 999px 999px 20px 20px; background: linear-gradient(180deg, #1B1B1B, #0F0F0F); color: #F6EBD9; cursor: pointer; text-align: center">
+<svg viewBox="0 0 48 48" width="64" height="64" aria-hidden="true" fill="none" stroke="#F2B544" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="21" width="34" height="21"/><rect x="5" y="14" width="38" height="7"/><path d="M24 14 V42"/><path d="M24 14 C19 4 10 7 15 13 M24 14 C29 4 38 7 33 13"/></svg>
+<span style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 24px; line-height: 1.05">{{t.tilePackages}}</span>
+<span style="display: block; min-height: 37px; font-size: 14px; line-height: 1.3; font-weight: 500; color: #F2B544">{{tileSub.packages}}</span>
+</button>
+<button class="tile" onClick="{{goPlan}}" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 10px; min-height: 236px; padding: 38px 12px 22px 12px; border: 1.5px solid rgba(242,181,68,0.6); border-radius: 999px 999px 20px 20px; background: linear-gradient(180deg, #1B1B1B, #0F0F0F); color: #F6EBD9; cursor: pointer; text-align: center">
+<svg viewBox="0 0 48 48" width="64" height="64" aria-hidden="true" fill="none" stroke="#F2B544" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="9" width="32" height="32" rx="3"/><path d="M8 18 H40"/><path d="M16 5 V12 M32 5 V12"/><path d="M17 29 L22 34 L31 24"/></svg>
+<span style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 24px; line-height: 1.05">{{t.tilePlan}}</span>
+<span style="display: block; min-height: 37px; font-size: 14px; line-height: 1.3; font-weight: 500; color: #F2B544">{{tileSub.plan}}</span>
+</button>
+</div>
+</div>
+</section>
+</sc-if>
+
+
+<!-- TOP BAR -->
+<sc-if value="{{showBar}}" hint-placeholder-val="{{false}}">
+<div style="position: sticky; top: 0; z-index: 30; background: #0B0B0B; border-bottom: 1px solid rgba(242,181,68,0.45)">
+<div style="max-width: 1280px; margin: 0 auto; padding: 10px 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px">
+<button onClick="{{goHome}}" style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1.5px solid #F2B544; background: transparent; color: #F2B544; font-size: 15px; font-weight: 600; cursor: pointer">&larr; {{t.backMenu}}</button>
+<div style="display: flex; align-items: center; gap: 8px">
+<button onClick="{{goGuestCI}}" style="min-height: 44px; padding: 0 14px; border: 2.5px solid #F2B544; border-radius: 6px; background: transparent; color: #F6EBD9; font-size: 15px; font-weight: 700; letter-spacing: 0.04em; cursor: pointer">{{t.tabGC}}</button>
+<div style="display: flex; align-items: center; gap: 2px; padding: 3px; border: 1.5px solid rgba(246,235,217,0.4); border-radius: 999px">
+<button onClick="{{setEn}}" aria-pressed="{{isEn}}" style="min-height: 36px; min-width: 40px; border: 0; border-radius: 999px; cursor: pointer; font-size: 14px; font-weight: 600; background: {{enBg}}; color: {{enFg}}">EN</button>
+<button onClick="{{setEs}}" aria-pressed="{{isEs}}" style="min-height: 36px; min-width: 40px; border: 0; border-radius: 999px; cursor: pointer; font-size: 14px; font-weight: 600; background: {{esBg}}; color: {{esFg}}">ES</button>
+</div>
+<button onClick="{{goPlan}}" style="min-height: 44px; padding: 0 16px; border-radius: 999px; border: 0; background: #F2B544; color: #0B0B0B; font-size: 15px; font-weight: 600; cursor: pointer">{{planBtn}}</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isTransfers}}" hint-placeholder-val="{{false}}">
+<!-- TRANSFERS -->
+<section id="transfers" class="scr" style="background: #F6EBD9; color: #0B0B0B">
+<div style="max-width: 1280px; margin: 0 auto; padding: 104px 32px 120px 32px; display: flex; flex-direction: column; gap: 56px">
+
+<div style="display: flex; flex-wrap: wrap; gap: 32px 64px; align-items: flex-end; justify-content: space-between">
+<div style="flex: 1 1 520px; display: flex; flex-direction: column; gap: 20px">
+<div style="font-size: 15px; font-weight: 600; letter-spacing: 0.26em; color: #8A2F1C">01 · {{t.tEyebrow}}</div>
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(44px, 5.8vw, 84px); line-height: 0.98; letter-spacing: -0.025em; text-wrap: balance">{{t.tTitleA}} <span style="font-style: italic; font-weight: 500; color: #B9472F">{{t.tTitleB}}</span></h2>
+</div>
+<p style="flex: 1 1 380px; max-width: 460px; margin: 0; font-size: 20px; line-height: 1.5; text-wrap: pretty">{{t.tText}}</p>
+</div>
+
+<div style="display: flex; align-items: center; gap: 20px">
+<div style="flex: none; display: flex; flex-direction: column; align-items: center; gap: 6px">
+<div style="width: 56px; height: 56px; border-radius: 50%; background: #0B0B0B; color: #F2B544; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; letter-spacing: 0.08em">SDQ</div>
+</div>
+<svg viewBox="0 0 800 60" preserveAspectRatio="none" aria-hidden="true" style="flex: 1; height: 60px; min-width: 0"><path d="M0 30 C120 2, 240 58, 400 30 S680 2, 800 30" fill="none" stroke="#B9472F" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>
+<div style="flex: none; display: flex; align-items: center; gap: 12px">
+<div style="width: 56px; height: 64px; border-radius: 999px 999px 0 0; background: #B9472F"></div>
+<div style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 24px; line-height: 1.1">Regis Point</div>
+</div>
+</div>
+
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 24px">
+<sc-for list="{{vehicles}}" as="v" hint-placeholder-count="2">
+<div class="card" style="display: flex; flex-direction: column; justify-content: space-between; gap: 32px; min-height: 340px; padding: 40px; background: {{v.bg}}; color: {{v.fg}}; opacity: {{v.opacity}}">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<sc-if value="{{v.fit}}" hint-placeholder-val="{{false}}">
+<div style="align-self: flex-start; padding: 6px 12px; background: #F2B544; color: #0B0B0B; font-size: 13px; font-weight: 600; letter-spacing: 0.14em">{{t.fitTag}}</div>
+</sc-if>
+<svg viewBox="0 0 160 62" width="168" height="65" role="img" aria-label="{{v.name}}">
+<rect x="8" y="{{v.bodyY}}" width="144" height="{{v.bodyH}}" rx="8" fill="{{v.fg}}"/>
+<path d="{{v.cabin}}" fill="{{v.fg}}"/>
+<path d="{{v.glass}}" fill="{{v.bg}}"/>
+<circle cx="44" cy="50" r="10" fill="{{v.bg}}" stroke="{{v.fg}}" stroke-width="5"/>
+<circle cx="118" cy="50" r="10" fill="{{v.bg}}" stroke="{{v.fg}}" stroke-width="5"/>
+</svg>
+<div style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 48px; line-height: 1">{{v.name}}</div>
+<div style="font-size: 20px; line-height: 1.4; font-weight: 500">{{v.cap}}</div>
+<div style="font-size: 17px; line-height: 1.4">{{v.desc}}</div>
+</div>
+<div style="display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px">
+<span style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 72px; line-height: 1">{{v.price}}</span>
+<span style="font-size: 17px; font-weight: 500">{{t.perVehicle}}</span>
+</div>
+<div style="padding-top: 14px; border-top: 1.5px solid currentColor; font-size: 18px; font-weight: 600">{{t.rtOr}} {{v.rtText}} {{t.rtEach}}</div>
+</div>
+</sc-for>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px">
+<p style="margin: 0; max-width: 640px; font-size: 18px; line-height: 1.5">{{t.tNote}}</p>
+<a class="btn" href="#" onClick="{{addTransfer}}" style="display: inline-flex; align-items: center; min-height: 54px; padding: 0 30px; border-radius: 999px; background: #0B0B0B; color: #F6EBD9; font-size: 17px; font-weight: 600; text-decoration: none">{{t.tCta}}</a>
+</div>
+
+</div>
+</section>
+
+</sc-if>
+
+<!-- BEACHES -->
+<sc-if value="{{isBeaches}}" hint-placeholder-val="{{false}}">
+<section id="beaches" class="scr" style="background: #F6EBD9; color: #0B0B0B">
+<div style="max-width: 1280px; margin: 0 auto; padding: 48px 20px 96px 20px; display: flex; flex-direction: column; gap: 40px">
+<div style="display: flex; flex-wrap: wrap; gap: 24px 64px; align-items: flex-end; justify-content: space-between">
+<div style="flex: 1 1 420px; display: flex; flex-direction: column; gap: 18px">
+<div style="font-size: 15px; font-weight: 600; letter-spacing: 0.26em; color: #8A2F1C">{{t.bEyebrow}}</div>
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(44px, 5.8vw, 84px); line-height: 0.98; letter-spacing: -0.025em; text-wrap: balance">{{t.bTitleA}} <span style="font-style: italic; font-weight: 500; color: #B9472F">{{t.bTitleB}}</span></h2>
+</div>
+<p style="flex: 1 1 340px; max-width: 460px; margin: 0; font-size: 20px; line-height: 1.5; text-wrap: pretty">{{t.bText}}</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 20px">
+<sc-for list="{{beachCards}}" as="b" hint-placeholder-count="4">
+<div class="card" style="display: flex; flex-direction: column; justify-content: space-between; gap: 26px; padding: 30px 26px; background: #0B0B0B; color: #F6EBD9; border: 3px solid {{b.border}}">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="align-self: flex-start; padding: 6px 12px; background: #F2B544; color: #0B0B0B; font-size: 13px; font-weight: 600; letter-spacing: 0.14em">{{t.bTag}}</div>
+<div style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 44px; line-height: 1">{{b.name}}</div>
+<div style="font-size: 17px; line-height: 1.45">{{b.blurb}}</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px">
+<span style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 64px; line-height: 1; color: #F2B544">{{b.price}}</span>
+<span style="font-size: 16px; font-weight: 500">{{b.vname}} · {{t.bPer}}</span>
+</div>
+<div style="font-size: 15px; line-height: 1.4; color: #F6EBD9">{{b.other}}</div>
+</div>
+<button class="btn" onClick="{{b.pick}}" style="min-height: 52px; padding: 0 24px; border: 0; border-radius: 999px; cursor: pointer; font-size: 17px; font-weight: 600; background: {{b.btnBg}}; color: #0B0B0B">{{b.btnText}}</button>
+</div>
+</sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px">
+<p style="margin: 0; max-width: 640px; font-size: 18px; line-height: 1.5">{{t.bNote}}</p>
+<button class="btn" onClick="{{goPlan}}" style="min-height: 54px; padding: 0 30px; border: 0; border-radius: 999px; cursor: pointer; background: #0B0B0B; color: #F6EBD9; font-size: 17px; font-weight: 600">{{t.bSeePlan}}</button>
+</div>
+</div>
+</section>
+</sc-if>
+
+<!-- SPA -->
+<sc-if value="{{isSpa}}" hint-placeholder-val="{{false}}">
+<section id="spa" class="scr" style="background: #F6EBD9; color: #0B0B0B">
+<div style="max-width: 1280px; margin: 0 auto; padding: 48px 20px 96px 20px; display: flex; flex-direction: column; gap: 36px">
+<div style="display: flex; flex-wrap: wrap; gap: 24px 64px; align-items: flex-end; justify-content: space-between">
+<div style="flex: 1 1 420px; display: flex; flex-direction: column; gap: 18px">
+<div style="font-size: 15px; font-weight: 600; letter-spacing: 0.26em; color: #8A2F1C">{{t.sEyebrow}}</div>
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(44px, 5.8vw, 84px); line-height: 0.98; letter-spacing: -0.025em; text-wrap: balance">{{t.sTitleA}} <span style="font-style: italic; font-weight: 500; color: #B9472F">{{t.sTitleB}}</span></h2>
+</div>
+<p style="flex: 1 1 340px; max-width: 460px; margin: 0; font-size: 20px; line-height: 1.5; text-wrap: pretty">{{t.sText}}</p>
+</div>
+<div style="display: flex; flex-direction: column">
+<sc-for list="{{spaRows}}" as="r" hint-placeholder-count="14">
+<div style="display: flex; flex-direction: column">
+<sc-if value="{{r.isHead}}" hint-placeholder-val="{{false}}">
+<div style="padding: 36px 0 12px 0; font-size: 15px; font-weight: 600; letter-spacing: 0.26em; color: #8A2F1C; border-bottom: 3px solid #0B0B0B">{{r.title}}</div>
+</sc-if>
+<sc-if value="{{r.isItem}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 24px; padding: 18px 0; border-bottom: 1.5px solid rgba(11,11,11,0.3)">
+<div style="flex: 1 1 260px; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 26px; line-height: 1.1">{{r.name}} <span style="font-family: 'Jost', system-ui, sans-serif; font-size: 15px; font-weight: 500; letter-spacing: 0.04em; color: #B9472F; white-space: nowrap">{{r.dur}}</span></div>
+<div style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px; text-align: right">
+<div style="font-size: 20px; font-weight: 600">{{r.cost}}</div>
+<div style="font-size: 15px; color: #8A2F1C; font-weight: 500">{{r.note}}</div>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+</sc-if>
+
+<!-- GUEST CHECK-IN -->
+<sc-if value="{{isGuestCI}}" hint-placeholder-val="{{false}}">
+<section id="guestci" class="scr" style="background: #0B0B0B; color: #F6EBD9">
+<div style="max-width: 1000px; margin: 0 auto; padding: 48px 20px 96px 20px; display: flex; flex-direction: column; gap: 36px">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<div style="font-size: 15px; font-weight: 600; letter-spacing: 0.26em; color: #F2B544">{{t.gcEyebrow}}</div>
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(44px, 5.8vw, 84px); line-height: 0.98; letter-spacing: -0.025em; text-wrap: balance">{{t.gcTitleA}} <span style="font-style: italic; font-weight: 500; color: #F2B544">{{t.gcTitleB}}</span></h2>
+<p style="margin: 0; max-width: 560px; font-size: 20px; line-height: 1.5; text-wrap: pretty">{{t.gcText}}</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="font-size: 16px; font-weight: 600; letter-spacing: 0.14em; color: #F2B544">{{t.gcProp}}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<sc-for list="{{gcPropChips}}" as="x" hint-placeholder-count="2">
+<button onClick="{{x.pick}}" aria-pressed="{{x.on}}" style="min-height: 52px; padding: 0 24px; border: 1.5px solid #F6EBD9; border-radius: 999px; cursor: pointer; font-size: 18px; font-weight: 600; background: {{x.bg}}; color: {{x.fg}}">{{x.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 16px">
+<sc-for list="{{gcFields}}" as="f" hint-placeholder-count="13">
+<label style="display: flex; flex-direction: column; gap: 6px; min-width: 0; font-size: 15px; font-weight: 500">{{f.label}}
+<input type="{{f.type}}" inputmode="{{f.im}}" list="{{f.list}}" min="{{f.min}}" max="{{f.max}}" value="{{f.value}}" onInput="{{f.set}}" onChange="{{f.set}}" autocomplete="{{f.ac}}" style="display: block; width: 100%; min-width: 0; max-width: 100%; height: 56px; margin: 0; padding: 0 16px; border: 1.5px solid rgba(246,235,217,0.5); border-radius: 0; background: #F6EBD9; color: #0B0B0B; font-size: 18px; line-height: normal; font-family: inherit; -webkit-appearance: none; appearance: none"></label>
+</sc-for>
+</div>
+<datalist id="gc-countries">
+<sc-for list="{{gcCountries}}" as="c" hint-placeholder-count="3">
+<option value="{{c.v}}"></option>
+</sc-for>
+</datalist>
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="font-size: 16px; font-weight: 600; letter-spacing: 0.14em; color: #F2B544">{{t.gcPurpose}}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<sc-for list="{{gcPurposeChips}}" as="x" hint-placeholder-count="5">
+<button onClick="{{x.pick}}" aria-pressed="{{x.on}}" style="min-height: 48px; padding: 0 20px; border: 1.5px solid #F6EBD9; border-radius: 999px; cursor: pointer; font-size: 17px; font-weight: 600; background: {{x.bg}}; color: {{x.fg}}">{{x.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="font-size: 16px; font-weight: 600; letter-spacing: 0.14em; color: #F2B544">{{t.gcSource}}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<sc-for list="{{gcSourceChips}}" as="x" hint-placeholder-count="5">
+<button onClick="{{x.pick}}" aria-pressed="{{x.on}}" style="min-height: 48px; padding: 0 20px; border: 1.5px solid #F6EBD9; border-radius: 999px; cursor: pointer; font-size: 17px; font-weight: 600; background: {{x.bg}}; color: {{x.fg}}">{{x.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="font-size: 16px; font-weight: 600; letter-spacing: 0.14em; color: #F2B544">{{t.gcGuestsQ}}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{gcGuestChips}}" as="x" hint-placeholder-count="8">
+<button onClick="{{x.pick}}" aria-pressed="{{x.on}}" style="width: 52px; height: 52px; border-radius: 50%; cursor: pointer; font-size: 20px; font-weight: 600; border: 1.5px solid #F6EBD9; background: {{x.bg}}; color: {{x.fg}}">{{x.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px; padding: 28px; border: 1.5px solid rgba(242,181,68,0.6)">
+<div style="font-size: 16px; font-weight: 600; letter-spacing: 0.14em; color: #F2B544">{{t.gcPassTitle}}</div>
+<p style="margin: 0; font-size: 17px; line-height: 1.5">{{t.gcPassText}}</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 16px">
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 500; max-width: 480px">{{t.gcSign}}
+<input type="text" value="{{gcSign}}" onInput="{{setGcSign}}" style="min-height: 60px; padding: 0 16px; border: 1.5px solid rgba(246,235,217,0.5); border-radius: 0; background: #F6EBD9; color: #0B0B0B; font-size: 26px; font-family: 'Fraunces', Georgia, serif; font-style: italic"></label>
+<button onClick="{{toggleGcAgree}}" aria-pressed="{{gcAgreeOn}}" style="display: flex; align-items: center; gap: 14px; min-height: 52px; padding: 0; border: 0; background: transparent; color: #F6EBD9; font-size: 17px; text-align: left; cursor: pointer">
+<span aria-hidden="true" style="flex: none; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 2px solid #F2B544; background: {{gcAgreeBg}}; color: #0B0B0B; font-size: 20px; font-weight: 700">{{gcAgreeMark}}</span>
+<span>{{t.gcAgree}}</span>
+</button>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px">
+<a class="btn" href="{{gcHref}}" style="display: inline-flex; align-items: center; justify-content: center; min-height: 58px; padding: 0 34px; border-radius: 999px; background: #F2B544; color: #0B0B0B; font-size: 18px; font-weight: 600; text-decoration: none; opacity: {{gcBtnOpacity}}">{{t.gcSend}}</a>
+<span style="font-size: 16px; color: #F6EBD9">{{gcHint}}</span>
+</div>
+</div>
+</section>
+</sc-if>
+
+<!-- EARLY CHECK-IN / LATE CHECK-OUT -->
+<sc-if value="{{isApts}}" hint-placeholder-val="{{false}}">
+<section id="apartments" class="scr" style="background: #F6EBD9; color: #0B0B0B">
+<div style="max-width: 1280px; margin: 0 auto; padding: 48px 20px 96px 20px; display: flex; flex-direction: column; gap: 48px">
+<div style="display: flex; flex-wrap: wrap; gap: 24px 64px; align-items: flex-end; justify-content: space-between">
+<div style="flex: 1 1 420px; display: flex; flex-direction: column; gap: 18px">
+<div style="font-size: 15px; font-weight: 600; letter-spacing: 0.26em; color: #8A2F1C">{{t.aptEyebrow}}</div>
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(44px, 5.8vw, 84px); line-height: 0.98; letter-spacing: -0.025em; text-wrap: balance">{{t.aptTitleA}} <span style="font-style: italic; font-weight: 500; color: #B9472F">{{t.aptTitleB}}</span></h2>
+</div>
+<p style="flex: 1 1 340px; max-width: 460px; margin: 0; font-size: 20px; line-height: 1.5; text-wrap: pretty">{{t.aptText}}</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 40px 32px; align-items: stretch">
+<sc-for list="{{aptCards}}" as="a" hint-placeholder-count="2">
+<article style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; background: #0B0B0B; color: #F6EBD9">
+<div style="display: flex; flex-direction: column; gap: 4px; background: #0B0B0B">
+<sc-for list="{{a.photos}}" as="ph" hint-placeholder-count="2">
+<div style="height: clamp(220px, 30vw, 340px); overflow: hidden; background: #222222"><img class="pic" src="{{ph.src}}" alt="{{ph.alt}}" style="width: 100%; height: 100%; object-fit: cover; object-position: {{ph.pos}}"></div>
+</sc-for>
+<sc-if value="{{a.noPhoto}}" hint-placeholder-val="{{false}}">
+<div style="height: clamp(220px, 30vw, 340px); display: flex; align-items: center; justify-content: center; background: #B9472F; color: #FFF6E8; font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 26px">{{t.aptPhotoSoon}}</div>
+</sc-if>
+</div>
+<div style="display: flex; flex-direction: column; gap: 18px; padding: 28px 28px 32px 28px; flex: 1 1 auto">
+<div style="font-size: 14px; font-weight: 600; letter-spacing: 0.22em; color: #F2B544">{{a.tag}}</div>
+<h3 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(30px, 3.6vw, 44px); line-height: 1.02">{{a.name}}</h3>
+<div style="font-size: 16px; font-weight: 600; color: #F2B544">{{a.facts}}</div>
+<div style="font-size: 15px; font-weight: 500; color: rgba(246,235,217,0.8)">{{a.rating}}</div>
+<p style="margin: 0; font-size: 18px; line-height: 1.5; text-wrap: pretty">{{a.desc}}</p>
+<ul style="margin: 0; padding: 0 0 0 20px; display: flex; flex-direction: column; gap: 6px; font-size: 16px; line-height: 1.4">
+<sc-for list="{{a.points}}" as="pt" hint-placeholder-count="4">
+<li>{{pt.text}}</li>
+</sc-for>
+</ul>
+<div style="margin-top: auto; padding-top: 12px">
+<a class="btn" href="{{a.href}}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 26px; border-radius: 999px; background: #F2B544; color: #0B0B0B; font-size: 17px; font-weight: 600; text-decoration: none">{{a.cta}}</a>
+</div>
+</div>
+</article>
+</sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: center; justify-content: space-between; padding: 28px 32px; border: 2.5px solid #0B0B0B">
+<div style="flex: 1 1 360px; display: flex; flex-direction: column; gap: 6px">
+<div style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 30px; line-height: 1.05">{{t.aptStay}}</div>
+<div style="font-size: 17px; line-height: 1.45">{{t.aptStayText}}</div>
+</div>
+<a class="btn" href="#" onClick="{{goPlan}}" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 26px; border-radius: 999px; background: #0B0B0B; color: #F6EBD9; font-size: 17px; font-weight: 600; text-decoration: none">{{t.aptPlan}}</a>
+</div>
+</div>
+</section>
+</sc-if>
+<sc-if value="{{isCheckin}}" hint-placeholder-val="{{false}}">
+<section id="checkin" class="scr" style="background: #F6EBD9; color: #0B0B0B">
+<div style="max-width: 1280px; margin: 0 auto; padding: 48px 20px 96px 20px; display: flex; flex-direction: column; gap: 36px">
+<div style="display: flex; flex-wrap: wrap; gap: 24px 64px; align-items: flex-end; justify-content: space-between">
+<div style="flex: 1 1 420px; display: flex; flex-direction: column; gap: 18px">
+<div style="font-size: 15px; font-weight: 600; letter-spacing: 0.26em; color: #8A2F1C">{{t.ciEyebrow}}</div>
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(44px, 5.8vw, 84px); line-height: 0.98; letter-spacing: -0.025em; text-wrap: balance">{{t.ciTitleA}} <span style="font-style: italic; font-weight: 500; color: #B9472F">{{t.ciTitleB}}</span></h2>
+</div>
+<p style="flex: 1 1 340px; max-width: 460px; margin: 0; font-size: 20px; line-height: 1.5; text-wrap: pretty">{{t.ciText}}</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px 40px; padding: 18px 24px; background: #0B0B0B; color: #F6EBD9; font-size: 18px; font-weight: 500">
+<span><strong style="color: #F2B544">{{t.ciIn}}</strong> 15:00</span>
+<span><strong style="color: #F2B544">{{t.ciOut}}</strong> 11:00</span>
+<span style="color: #F2B544; font-weight: 600">{{t.ciSubject}}</span>
+</div>
+<div style="display: flex; flex-direction: column">
+<sc-for list="{{ciRows}}" as="r" hint-placeholder-count="14">
+<div style="display: flex; flex-direction: column">
+<sc-if value="{{r.isHead}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 24px; padding: 36px 0 12px 0; border-bottom: 3px solid #0B0B0B">
+<div style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 34px; line-height: 1">{{r.title}}</div>
+</div>
+</sc-if>
+<sc-if value="{{r.isItem}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-wrap: nowrap; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0; border-bottom: 1.5px solid rgba(11,11,11,0.3)">
+<div style="flex: 1 1 0; min-width: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(20px, 5.5vw, 26px); line-height: 1.1">{{r.name}} <span style="font-family: 'Jost', system-ui, sans-serif; font-size: 15px; font-weight: 500; letter-spacing: 0.04em; color: #B9472F; white-space: nowrap">{{r.hour}}</span></div>
+<div style="flex: none; display: flex; align-items: center; justify-content: flex-end; gap: clamp(14px, 4vw, 28px)">
+<div style="font-size: clamp(20px, 5.5vw, 26px); font-weight: 600; text-align: right; min-width: 62px">{{r.week}}</div>
+<button class="btn" onClick="{{r.pick}}" style="flex: none; min-height: 44px; width: 104px; padding: 0 12px; border: 0; border-radius: 999px; cursor: pointer; font-size: 16px; font-weight: 600; background: {{r.btnBg}}; color: {{r.btnFg}}">{{r.btnText}}</button>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 28px; background: #0B0B0B; color: #F6EBD9">
+<div style="font-size: 15px; font-weight: 600; letter-spacing: 0.26em; color: #F2B544">{{t.ciRulesTitle}}</div>
+<sc-for list="{{ciRules}}" as="x" hint-placeholder-count="4">
+<div style="display: flex; gap: 12px; align-items: baseline; padding-top: 10px; border-top: 1.5px solid rgba(246,235,217,0.25)">
+<span aria-hidden="true" style="flex: none; color: #F2B544; font-weight: 600">✦</span>
+<span style="font-size: 17px; line-height: 1.4">{{x.label}}</span>
+</div>
+</sc-for>
+</div>
+<p style="margin: 0; max-width: 640px; font-size: 18px; line-height: 1.5">{{t.ciNote}}</p>
+<sc-if value="{{hasItems}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 28px; background: #0B0B0B; color: #F6EBD9">
+<div style="font-size: 19px; font-weight: 500">{{t.barText}} <strong style="color: #F2B544">{{totalText}}</strong></div>
+<a class="btn" href="#" onClick="{{goCheckout}}" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; border-radius: 999px; background: #F2B544; color: #0B0B0B; font-size: 17px; font-weight: 600; text-decoration: none">{{t.barCta}}</a>
+</div>
+</sc-if>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{isTours}}" hint-placeholder-val="{{false}}">
+<!-- TOURS -->
+<section id="tours" class="scr" style="position: relative; overflow: hidden; background: #0B0B0B; color: #F6EBD9">
+
+<div class="arch" style="width: 100%; height: clamp(240px, 32vw, 420px); overflow: hidden; background: #222222"><img class="pic" src="img/6d6cc70a430a921f4ecdccb52783384f.jpg" alt="Guests on a walking tour of the Zona Colonial" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%"></div>
+
+<div style="position: relative; max-width: 1280px; margin: 0 auto; padding: 96px 32px 120px 32px; display: flex; flex-direction: column; gap: 56px">
+
+<div style="display: flex; flex-wrap: wrap; gap: 32px 64px; align-items: flex-end; justify-content: space-between">
+<div style="flex: 1 1 520px; display: flex; flex-direction: column; gap: 20px">
+<div style="font-size: 15px; font-weight: 600; letter-spacing: 0.26em; color: #F2B544">02 · {{t.toEyebrow}}</div>
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(44px, 5.8vw, 84px); line-height: 0.98; letter-spacing: -0.025em; text-wrap: balance">{{t.toTitleA}} <span style="font-style: italic; font-weight: 500; color: #F2B544">{{t.toTitleB}}</span></h2>
+</div>
+<p style="flex: 1 1 380px; max-width: 460px; margin: 0; font-size: 20px; line-height: 1.5; text-wrap: pretty">{{t.toText}}</p>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; font-size: 18px">
+<span style="font-weight: 600; letter-spacing: 0.14em; font-size: 15px; color: #F2B544">{{t.pricingFor}}</span>
+<span style="padding: 8px 18px; border-radius: 999px; background: #F6EBD9; color: #0B0B0B; font-weight: 600">{{guestsText}}</span>
+<a href="#" onClick="{{goHome}}" style="font-weight: 600; color: #F2B544">{{t.change}}</a>
+<span style="font-size: 17px; color: #F6EBD9">{{t.tierNote}}</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 0">
+<div class="card arch" style="display: flex; flex-wrap: wrap; background: #F6EBD9; color: #0B0B0B; border: 3px solid {{tour.border}}">
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 18px; padding: 44px 44px 44px 44px">
+<div style="font-size: 13px; font-weight: 600; letter-spacing: 0.14em; color: #8A2F1C">{{t.tag12}}</div>
+<div style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(34px, 4vw, 48px); line-height: 1.05">{{tour.title}}</div>
+<div style="font-size: 19px; line-height: 1.45">{{tour.desc}}</div>
+<div style="display: flex; flex-direction: column; gap: 10px; padding-top: 6px">
+<sc-for list="{{tour.inc}}" as="r" hint-placeholder-count="3">
+<div style="display: flex; gap: 12px; align-items: baseline; padding-top: 10px; border-top: 1.5px solid rgba(11,11,11,0.3)">
+<span aria-hidden="true" style="flex: none; color: #8A2F1C; font-weight: 600">✦</span>
+<span style="font-size: 17px; line-height: 1.35">{{r.label}}</span>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 18px; padding: 44px; background: #0B0B0B; color: #F6EBD9; border-left: 0">
+<div style="display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px">
+<span style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 72px; line-height: 1">{{tour.price}}</span>
+<span style="font-size: 17px; font-weight: 500">{{t.perPerson}}</span>
+</div>
+<div style="font-size: 16px; line-height: 1.4">{{tour.totalText}}</div>
+<button class="btn" onClick="{{tour.pick}}" style="min-height: 54px; padding: 0 26px; border: 0; border-radius: 999px; cursor: pointer; font-size: 17px; font-weight: 600; background: {{tour.btnBg}}; color: #0B0B0B">{{tour.btnText}}</button>
+</div>
+</div>
+<div class="card arch" style="display: flex; flex-wrap: wrap; background: #F6EBD9; color: #0B0B0B; border: 3px solid {{tour2.border}}; border-top: 1.5px solid rgba(11,11,11,0.35)">
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 18px; padding: 44px 44px 44px 44px">
+<div style="font-size: 13px; font-weight: 600; letter-spacing: 0.14em; color: #8A2F1C">{{t.tag2}}</div>
+<div style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(34px, 4vw, 48px); line-height: 1.05">{{tour2.title}}</div>
+<div style="font-size: 19px; line-height: 1.45">{{tour2.desc}}</div>
+<div style="display: flex; flex-direction: column; gap: 10px; padding-top: 6px">
+<sc-for list="{{tour2.inc}}" as="r" hint-placeholder-count="3">
+<div style="display: flex; gap: 12px; align-items: baseline; padding-top: 10px; border-top: 1.5px solid rgba(11,11,11,0.3)">
+<span aria-hidden="true" style="flex: none; color: #8A2F1C; font-weight: 600">✦</span>
+<span style="font-size: 17px; line-height: 1.35">{{r.label}}</span>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 18px; padding: 44px; background: #0B0B0B; color: #F6EBD9; border-left: 0">
+<div style="display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px">
+<span style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 72px; line-height: 1">{{tour2.price}}</span>
+<span style="font-size: 17px; font-weight: 500">{{t.perPerson}}</span>
+</div>
+<div style="font-size: 16px; line-height: 1.4">{{tour2.totalText}}</div>
+<button class="btn" onClick="{{tour2.pick}}" style="min-height: 54px; padding: 0 26px; border: 0; border-radius: 999px; cursor: pointer; font-size: 17px; font-weight: 600; background: {{tour2.btnBg}}; color: #0B0B0B">{{tour2.btnText}}</button>
+</div>
+</div>
+</div>
+
+<sc-if value="{{hasItems}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 28px; background: #F6EBD9; color: #0B0B0B">
+<div style="font-size: 19px; font-weight: 500">{{t.barText}} <strong>{{totalText}}</strong></div>
+<a class="btn" href="#" onClick="{{goCheckout}}" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; border-radius: 999px; background: #0B0B0B; color: #F6EBD9; font-size: 17px; font-weight: 600; text-decoration: none">{{t.barCta}}</a>
+</div>
+</sc-if>
+
+</div>
+</section>
+
+</sc-if>
+
+<sc-if value="{{isCooking}}" hint-placeholder-val="{{false}}">
+<!-- COOKING -->
+<section id="cooking" class="scr" style="position: relative; overflow: hidden; background: #B9472F; color: #FFF6E8">
+<div style="position: relative; max-width: 1280px; margin: 0 auto; padding: 120px 32px; display: flex; flex-wrap: wrap; gap: 64px 80px; align-items: center">
+
+<div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 28px">
+<div style="font-size: 15px; font-weight: 600; letter-spacing: 0.26em; color: #FFD98A">03 · {{t.cEyebrow}}</div>
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(44px, 5.8vw, 84px); line-height: 0.98; letter-spacing: -0.025em; text-wrap: balance">{{t.cTitleA}} <span style="font-style: italic; font-weight: 500; color: #FFD98A">{{t.cTitleB}}</span></h2>
+<p style="margin: 0; max-width: 560px; font-size: 20px; line-height: 1.5; text-wrap: pretty">{{t.cText}}</p>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 16px">
+<sc-for list="{{dishes}}" as="d" hint-placeholder-count="2">
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 26px; grid-column: {{d.span}}; background: {{d.bg}}; color: {{d.fg}}">
+<div style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 32px; line-height: 1.05">{{d.h}}</div>
+<div style="font-size: 17px; line-height: 1.4">{{d.p}}</div>
+</div>
+</sc-for>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<sc-for list="{{included}}" as="i" hint-placeholder-count="4">
+<div style="padding: 9px 16px; border: 1.5px solid #FFF6E8; font-size: 17px; font-weight: 500">{{i.label}}</div>
+</sc-for>
+</div>
+</div>
+
+<div style="flex: 0 1 460px; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center">
+<div class="arch" style="position: relative; width: 100%; max-width: 460px; aspect-ratio: 3 / 2; overflow: hidden; background: #1B1B1B">
+<img class="pic" src="img/38f2d301de7ea1fa0863f9749b2bc609.jpg" alt="Fresh shrimp pasta from the Regis Point cooking class" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%">
+<div style="position: absolute; right: 5%; top: 50%; transform: translateY(-50%); width: 120px; height: 120px; border-radius: 50%; background: #F2B544; color: #0B0B0B; display: flex; flex-direction: column; align-items: center; justify-content: center">
+<div style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em">US$</div>
+<div style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 50px; line-height: 0.9">68</div>
+<div style="font-size: 12px; font-weight: 600">{{t.perPerson}}</div>
+</div>
+</div>
+<div style="font-size: 18px; font-weight: 600; letter-spacing: 0.1em">{{t.threeHours}}</div>
+<a class="btn" href="#" onClick="{{addClass}}" style="display: inline-flex; align-items: center; min-height: 58px; padding: 0 34px; border-radius: 999px; background: #FFF6E8; color: #8A2F1C; font-size: 18px; font-weight: 600; text-decoration: none">{{t.cCta}}</a>
+<div style="max-width: 340px; font-size: 16px; line-height: 1.45">{{t.cNote}}</div>
+</div>
+
+</div>
+</section>
+
+</sc-if>
+
+<sc-if value="{{isPackages}}" hint-placeholder-val="{{false}}">
+<!-- PACKAGES -->
+<section id="packages" class="scr" style="background: #F6EBD9; color: #0B0B0B">
+<div style="max-width: 1280px; margin: 0 auto; padding: 104px 32px 112px 32px; display: flex; flex-direction: column; gap: 48px">
+
+<div style="display: flex; flex-wrap: wrap; gap: 28px 64px; align-items: flex-end; justify-content: space-between">
+<div style="flex: 1 1 520px; display: flex; flex-direction: column; gap: 20px">
+<div style="font-size: 15px; font-weight: 600; letter-spacing: 0.26em; color: #8A2F1C">04 · {{t.pkEyebrow}}</div>
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(44px, 5.8vw, 84px); line-height: 0.98; letter-spacing: -0.025em; text-wrap: balance">{{t.pkTitleA}} <span style="font-style: italic; font-weight: 500; color: #B9472F">{{pkTitleB}}</span></h2>
+</div>
+<p style="flex: 1 1 380px; max-width: 460px; margin: 0; font-size: 20px; line-height: 1.5; text-wrap: pretty">{{t.pkText}}</p>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; font-size: 18px">
+<span style="font-weight: 600; letter-spacing: 0.14em; font-size: 15px">{{t.pricingFor}}</span>
+<span style="padding: 8px 18px; border-radius: 999px; background: #0B0B0B; color: #F6EBD9; font-weight: 600">{{guestsText}}</span>
+<a href="#" onClick="{{goHome}}" style="font-weight: 600; color: #8A2F1C">{{t.change}}</a>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 40px; line-height: 1.05">{{t.pkSub1}}</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 24px">
+<sc-for list="{{combos}}" as="c" hint-placeholder-count="3">
+<div class="card arch" style="display: flex; flex-direction: column; background: {{c.bg}}; color: {{c.fg}}; border: 3px solid {{c.border}}">
+<div style="height: 220px; overflow: hidden; background: #222222"><img class="pic" src="{{c.img}}" alt="{{c.title}}" style="width: 100%; height: 100%; object-fit: cover; object-position: {{c.pos}}"></div>
+<div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 32px; padding: 36px 40px 40px 40px">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px">
+<span style="font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-style: italic; font-size: 72px; line-height: 0.9; color: {{c.accent}}">{{c.n}}</span>
+<span style="padding-top: 8px; font-size: 13px; font-weight: 600; letter-spacing: 0.12em; color: {{c.accent}}">{{c.tag}}</span>
+</div>
+<div style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 36px; line-height: 1.05">{{c.title}}</div>
+<div style="font-size: 18px; line-height: 1.45">{{c.desc}}</div>
+<div style="display: flex; flex-direction: column; gap: 10px; padding-top: 6px">
+<sc-for list="{{c.times}}" as="r" hint-placeholder-count="2">
+<div style="display: flex; gap: 14px; align-items: baseline; padding-top: 10px; border-top: 1.5px solid {{c.rule}}">
+<span style="flex: none; min-width: 108px; font-size: 16px; font-weight: 600; color: {{c.accent}}">{{r.h}}</span>
+<span style="font-size: 17px; line-height: 1.35">{{r.p}}</span>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px">
+<span style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 68px; line-height: 1">{{c.price}}</span>
+<span style="font-size: 17px; font-weight: 500">{{t.perPerson}}</span>
+</div>
+<sc-if value="{{c.hasSave}}" hint-placeholder-val="{{true}}">
+<div style="font-size: 16px; line-height: 1.4"><s style="opacity: 0.8">{{c.regPP}}</s> {{t.pkRegular}} · <strong>{{c.saveText}}</strong></div>
+</sc-if>
+<div style="font-size: 16px; line-height: 1.4">{{c.totalText}}</div>
+<button class="btn" onClick="{{c.pick}}" disabled="{{c.disabled}}" style="min-height: 54px; padding: 0 26px; border: 0; border-radius: 999px; cursor: pointer; font-size: 17px; font-weight: 600; background: {{c.btnBg}}; color: {{c.btnFg}}; opacity: {{c.btnOpacity}}">{{c.btnText}}</button>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 40px; line-height: 1.05">{{t.pkSub2}}</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 24px; align-items: stretch">
+<sc-for list="{{packages}}" as="p" hint-placeholder-count="3">
+<div class="card arch" style="display: flex; flex-direction: column; background: {{p.bg}}; color: {{p.fg}}; border: 3px solid {{p.border}}">
+<div style="position: relative; height: 240px; overflow: hidden; background: #222222">
+<img class="pic" src="{{p.img}}" alt="{{p.name}}" style="width: 100%; height: 100%; object-fit: cover; object-position: {{p.pos}}">
+<div style="position: absolute; right: 16px; top: 16px; padding: 7px 14px; background: #F6EBD9; color: #8A2F1C; font-size: 13px; font-weight: 600; letter-spacing: 0.14em">{{p.offText}}</div>
+<sc-if value="{{p.popular}}" hint-placeholder-val="{{false}}">
+<div style="position: absolute; left: 16px; top: 16px; padding: 7px 14px; background: #F2B544; color: #0B0B0B; font-size: 13px; font-weight: 600; letter-spacing: 0.14em">{{t.pkPopular}}</div>
+</sc-if>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 28px; padding: 32px 36px 36px 36px">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 40px; line-height: 1.02">{{p.name}}</div>
+<div style="font-size: 18px; line-height: 1.45">{{p.desc}}</div>
+<div style="display: flex; flex-direction: column; gap: 8px; padding-top: 4px">
+<sc-for list="{{p.inc}}" as="r" hint-placeholder-count="3">
+<div style="display: flex; gap: 12px; align-items: baseline; padding-top: 8px; border-top: 1.5px solid {{p.rule}}">
+<span aria-hidden="true" style="flex: none; color: {{p.accent}}; font-weight: 600">✦</span>
+<span style="font-size: 17px; line-height: 1.35">{{r.label}}</span>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px">
+<span style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 64px; line-height: 1">{{p.pp}}</span>
+<span style="font-size: 17px; font-weight: 500">{{t.perPerson}}</span>
+</div>
+<div style="font-size: 16px; line-height: 1.4"><s style="opacity: 0.8">{{p.regPP}}</s> {{t.pkRegular}} · <strong>{{p.saveText}}</strong></div>
+<div style="font-size: 16px; line-height: 1.4">{{p.totalText}}</div>
+<button class="btn" onClick="{{p.pick}}" disabled="{{p.disabled}}" style="min-height: 54px; padding: 0 26px; border: 0; border-radius: 999px; cursor: pointer; font-size: 17px; font-weight: 600; background: {{p.btnBg}}; color: {{p.btnFg}}; opacity: {{p.btnOpacity}}">{{p.btnText}}</button>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="font-size: 16px; line-height: 1.5; max-width: 760px">{{t.pkNote}}</div>
+
+<sc-if value="{{hasItems}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 28px; background: #0B0B0B; color: #F6EBD9">
+<div style="font-size: 19px; font-weight: 500">{{t.barText}} <strong>{{totalText}}</strong></div>
+<a class="btn" href="#" onClick="{{goCheckout}}" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; border-radius: 999px; background: #F2B544; color: #0B0B0B; font-size: 17px; font-weight: 600; text-decoration: none">{{t.barCta}}</a>
+</div>
+</sc-if>
+
+</div>
+</section>
+
+</sc-if>
+
+<sc-if value="{{isHome}}" hint-placeholder-val="{{true}}">
+<!-- HOME BASE -->
+<section style="background: #0B0B0B; color: #F6EBD9">
+<div style="max-width: 1280px; margin: 0 auto; padding: 120px 32px; display: flex; flex-direction: column; gap: 64px">
+<div style="display: flex; flex-wrap: wrap; gap: 28px 64px; align-items: flex-end; justify-content: space-between">
+<div style="flex: 1 1 520px; display: flex; flex-direction: column; gap: 20px">
+<div style="font-size: 15px; font-weight: 600; letter-spacing: 0.26em; color: #F2B544">{{t.homeEyebrow}}</div>
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(44px, 5.8vw, 84px); line-height: 0.98; letter-spacing: -0.025em; text-wrap: balance">{{t.homeTitleA}} <span style="font-style: italic; font-weight: 500; color: #F2B544">{{t.homeTitleB}}</span></h2>
+</div>
+<p style="flex: 1 1 380px; max-width: 460px; margin: 0; font-size: 20px; line-height: 1.5; text-wrap: pretty">{{t.homeText}}</p>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: center; gap: 20px">
+<div class="arch" style="flex: 1 1 260px; max-width: 380px; height: 480px; border-radius: 999px 999px 0 0; overflow: hidden; background: #222222">
+<img class="pic" src="img/6d6cc70a430a921f4ecdccb52783384f.jpg" alt="Guests on a walking tour of the Zona Colonial" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%">
+</div>
+<div class="arch" style="flex: 1 1 260px; max-width: 380px; height: 580px; border-radius: 999px 999px 0 0; overflow: hidden; background: #222222">
+<img class="pic" src="img/59987d03b8a00b871c3d0ca0264b5fe8.jpg" alt="Couple toasting on the Regis Point terrace" style="width: 100%; height: 100%; object-fit: cover; object-position: 62% 50%">
+</div>
+<div class="arch" style="flex: 1 1 260px; max-width: 380px; height: 420px; border-radius: 999px 999px 0 0; overflow: hidden; background: #222222">
+<img class="pic" src="img/60af880a0b5c2bee3d7de2873ff15c29.jpg" alt="Spa treatment at Regis Point" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%">
+</div>
+</div>
+</div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section style="background: #F6EBD9; color: #0B0B0B">
+<div style="max-width: 1280px; margin: 0 auto; padding: 112px 32px 96px 32px; display: flex; flex-direction: column; gap: 56px">
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(40px, 4.8vw, 68px); line-height: 1.02; letter-spacing: -0.025em; text-wrap: balance">{{t.howTitle}}</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 40px">
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 14px; padding-top: 22px; border-top: 3px solid #0B0B0B">
+<div style="font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-style: italic; font-size: 88px; line-height: 0.9; color: #B9472F">{{s.n}}</div>
+<div style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 30px; line-height: 1.1">{{s.h}}</div>
+<div style="font-size: 18px; line-height: 1.5">{{s.p}}</div>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+</sc-if>
+
+<sc-if value="{{isPlan}}" hint-placeholder-val="{{false}}">
+<!-- PLAN -->
+<section id="plan" style="background: #F6EBD9; color: #0B0B0B">
+<div style="max-width: 1280px; margin: 0 auto; padding: 24px 32px 128px 32px; display: flex; flex-direction: column; gap: 48px">
+
+<div style="display: flex; flex-direction: column; gap: 18px">
+<div style="font-size: 15px; font-weight: 600; letter-spacing: 0.26em; color: #8A2F1C">{{t.pEyebrow}}</div>
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(44px, 5.8vw, 84px); line-height: 0.98; letter-spacing: -0.025em; text-wrap: balance">{{t.pTitleA}} <span style="font-style: italic; font-weight: 500; color: #B9472F">{{t.pTitleB}}</span></h2>
+<p style="margin: 0; max-width: 620px; font-size: 20px; line-height: 1.5; text-wrap: pretty">{{t.pText}}</p>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">
+
+<div style="flex: 1 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 36px">
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="font-size: 16px; font-weight: 600; letter-spacing: 0.14em">{{t.stepGuests}}</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px">
+<span style="padding: 8px 18px; border-radius: 999px; background: #0B0B0B; color: #F6EBD9; font-size: 18px; font-weight: 600">{{guestsText}}</span>
+<a href="#" onClick="{{goHome}}" style="font-size: 17px; font-weight: 600; color: #8A2F1C">{{t.change}}</a>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="font-size: 16px; font-weight: 600; letter-spacing: 0.14em">{{t.stepTransfer}}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<sc-for list="{{tripChips}}" as="x" hint-placeholder-count="3">
+<button onClick="{{x.pick}}" aria-pressed="{{x.on}}" style="min-height: 48px; padding: 0 22px; border-radius: 999px; cursor: pointer; font-size: 17px; font-weight: 600; border: 1.5px solid #0B0B0B; background: {{x.bg}}; color: {{x.fg}}">{{x.label}}</button>
+</sc-for>
+</div>
+<div style="font-size: 16px; line-height: 1.4">{{vehicleHint}}</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="font-size: 16px; font-weight: 600; letter-spacing: 0.14em">{{t.stepTour}}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<sc-for list="{{comboChips}}" as="x" hint-placeholder-count="4">
+<button onClick="{{x.pick}}" disabled="{{x.disabled}}" aria-pressed="{{x.on}}" style="min-height: 48px; padding: 0 22px; border-radius: 999px; cursor: pointer; font-size: 17px; font-weight: 600; border: 1.5px solid #0B0B0B; background: {{x.bg}}; color: {{x.fg}}; opacity: {{x.opacity}}">{{x.label}}</button>
+</sc-for>
+</div>
+<div style="font-size: 16px; line-height: 1.4">{{t.maxNote}}</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="font-size: 16px; font-weight: 600; letter-spacing: 0.14em">{{t.stepClass}}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<sc-for list="{{classChips}}" as="x" hint-placeholder-count="3">
+<button onClick="{{x.pick}}" disabled="{{x.disabled}}" aria-pressed="{{x.on}}" style="min-height: 48px; padding: 0 22px; border-radius: 999px; cursor: pointer; font-size: 17px; font-weight: 600; border: 1.5px solid #0B0B0B; background: {{x.bg}}; color: {{x.fg}}; opacity: {{x.opacity}}">{{x.label}}</button>
+</sc-for>
+</div>
+<div style="font-size: 16px; line-height: 1.4">{{classHint}}</div>
+</div>
+
+</div>
+
+<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 24px; padding: 40px; background: #0B0B0B; color: #F6EBD9">
+<div style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 38px; line-height: 1.05">{{t.sumTitle}}</div>
+
+<sc-if value="{{noItems}}" hint-placeholder-val="{{false}}">
+<div style="font-size: 18px; line-height: 1.5; color: #F6EBD9">{{t.sumEmpty}}</div>
+</sc-if>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<sc-for list="{{items}}" as="it" hint-placeholder-count="3">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-bottom: 14px; border-bottom: 1.5px solid rgba(246,235,217,0.3)">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 18px; font-weight: 600">{{it.label}}</span>
+<span style="font-size: 15px; line-height: 1.35; color: #F6EBD9">{{it.sub}}</span>
+</div>
+<span style="flex: none; font-size: 20px; font-weight: 600">{{it.amount}}</span>
+</div>
+</sc-for>
+</div>
+
+<div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 16px">
+<span style="font-size: 16px; font-weight: 600; letter-spacing: 0.14em; color: #F2B544">{{t.sumTotal}}</span>
+<span style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(44px, 11vw, 60px); line-height: 1">{{totalText}}</span>
+</div>
+
+<a class="btn" href="#" onClick="{{goCheckout}}" style="display: flex; align-items: center; justify-content: center; min-height: 60px; padding: 0 28px; border-radius: 999px; background: #F2B544; color: #0B0B0B; font-size: 18px; font-weight: 600; text-decoration: none; text-align: center">{{t.sumPay}}</a>
+<a class="btn" href="{{mailto}}" style="display: flex; align-items: center; justify-content: center; min-height: 60px; padding: 0 28px; border-radius: 999px; background: transparent; color: #F6EBD9; border: 1.5px solid rgba(246,235,217,0.5); font-size: 18px; font-weight: 600; text-decoration: none; text-align: center">{{t.sumCta}}</a>
+<div style="font-size: 15px; line-height: 1.5; color: #F6EBD9">{{t.sumNote}}</div>
+<div style="font-size: 15px; line-height: 1.5; color: #F6EBD9">{{t.sumAlt}} <strong>regispoint51@gmail.com</strong></div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- CHECKOUT -->
+<section id="checkout" class="scr" style="background: #0B0B0B; color: #F6EBD9">
+<div style="max-width: 1280px; margin: 0 auto; padding: 112px 32px 120px 32px; display: flex; flex-direction: column; gap: 48px">
+
+<div style="display: flex; flex-wrap: wrap; gap: 28px 64px; align-items: flex-end; justify-content: space-between">
+<div style="flex: 1 1 520px; display: flex; flex-direction: column; gap: 20px">
+<div style="font-size: 15px; font-weight: 600; letter-spacing: 0.26em; color: #F2B544">{{t.payEyebrow}}</div>
+<h2 style="margin: 0; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(44px, 5.8vw, 84px); line-height: 0.98; letter-spacing: -0.025em; text-wrap: balance">{{t.payTitleA}} <span style="font-style: italic; font-weight: 500; color: #F2B544">{{t.payTitleB}}</span></h2>
+</div>
+<p style="flex: 1 1 380px; max-width: 460px; margin: 0; font-size: 20px; line-height: 1.5; text-wrap: pretty">{{t.payText}}</p>
+</div>
+
+<sc-if value="{{noItems}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 28px 32px; background: #F6EBD9; color: #0B0B0B">
+<div style="font-size: 19px; font-weight: 500">{{t.payEmpty}}</div>
+<a class="btn" href="#" onClick="{{goPackages}}" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; border-radius: 999px; background: #0B0B0B; color: #F6EBD9; font-size: 17px; font-weight: 600; text-decoration: none">{{t.payBrowse}}</a>
+</div>
+</sc-if>
+
+<sc-if value="{{hasItems}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">
+
+<div style="flex: 1 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 36px">
+
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div style="font-size: 16px; font-weight: 600; letter-spacing: 0.14em; color: #F2B544">{{t.payDetails}}</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 14px">
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 500">{{t.cName}}
+<input type="text" value="{{cname}}" onInput="{{setCname}}" autocomplete="name" style="min-height: 52px; padding: 0 16px; border: 1.5px solid rgba(246,235,217,0.5); border-radius: 0; background: #F6EBD9; color: #0B0B0B; font-size: 18px; font-family: inherit"></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 500">{{t.cEmail}}
+<input type="email" value="{{cemail}}" onInput="{{setCemail}}" autocomplete="email" style="min-height: 52px; padding: 0 16px; border: 1.5px solid rgba(246,235,217,0.5); border-radius: 0; background: #F6EBD9; color: #0B0B0B; font-size: 18px; font-family: inherit"></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 500">{{t.cWa}}
+<input type="tel" value="{{cwa}}" onInput="{{setCwa}}" autocomplete="tel" style="min-height: 52px; padding: 0 16px; border: 1.5px solid rgba(246,235,217,0.5); border-radius: 0; background: #F6EBD9; color: #0B0B0B; font-size: 18px; font-family: inherit"></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 500">{{t.cArr}}
+<input type="text" value="{{carr}}" onInput="{{setCarr}}" style="min-height: 52px; padding: 0 16px; border: 1.5px solid rgba(246,235,217,0.5); border-radius: 0; background: #F6EBD9; color: #0B0B0B; font-size: 18px; font-family: inherit"></label>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="font-size: 16px; font-weight: 600; letter-spacing: 0.14em; color: #F2B544">{{t.payWho}}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<sc-for list="{{modeChips}}" as="x" hint-placeholder-count="3">
+<button onClick="{{x.pick}}" disabled="{{x.disabled}}" aria-pressed="{{x.on}}" style="min-height: 48px; padding: 0 22px; border-radius: 999px; cursor: pointer; font-size: 17px; font-weight: 600; border: 1.5px solid #F6EBD9; background: {{x.bg}}; color: {{x.fg}}; opacity: {{x.opacity}}">{{x.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<sc-if value="{{showCount}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="font-size: 16px; font-weight: 600; letter-spacing: 0.14em; color: #F2B544">{{t.payHowMany}}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{countChips}}" as="x" hint-placeholder-count="6">
+<button onClick="{{x.pick}}" aria-pressed="{{x.on}}" style="width: 52px; height: 52px; border-radius: 50%; cursor: pointer; font-size: 20px; font-weight: 600; border: 1.5px solid #F6EBD9; background: {{x.bg}}; color: {{x.fg}}">{{x.label}}</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<div style="display: flex; flex-direction: column; gap: 16px">
+<sc-for list="{{payers}}" as="p" hint-placeholder-count="2">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px; padding: 22px; background: rgba(246,235,217,0.08); border: 1.5px solid rgba(246,235,217,0.3)">
+<label style="flex: 1 1 200px; min-width: 0; display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 500">{{p.nameLabel}}
+<input type="text" value="{{p.name}}" onInput="{{p.setName}}" style="min-height: 52px; padding: 0 16px; border: 1.5px solid rgba(246,235,217,0.5); border-radius: 0; background: #F6EBD9; color: #0B0B0B; font-size: 18px; font-family: inherit"></label>
+<sc-if value="{{p.editable}}" hint-placeholder-val="{{false}}">
+<label style="flex: 0 1 150px; min-width: 0; display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 500">{{t.payShare}} (US$)
+<input type="number" min="0" step="1" inputmode="decimal" value="{{p.amtVal}}" onInput="{{p.setAmt}}" style="min-height: 52px; padding: 0 16px; border: 1.5px solid rgba(246,235,217,0.5); border-radius: 0; background: #F6EBD9; color: #0B0B0B; font-size: 18px; font-family: inherit"></label>
+</sc-if>
+<sc-if value="{{p.fixed}}" hint-placeholder-val="{{true}}">
+<div style="flex: 0 1 150px; display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 500">{{t.payShare}}
+<div style="min-height: 52px; display: flex; align-items: center; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 32px">{{p.amountText}}</div></div>
+</sc-if>
+<a class="btn" href="{{p.payHref}}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; justify-content: center; flex: 0 1 auto; min-height: 52px; padding: 0 26px; border-radius: 999px; background: #F2B544; color: #0B0B0B; font-size: 17px; font-weight: 600; text-decoration: none; text-align: center; opacity: {{p.btnOpacity}}">{{p.btnText}}</a>
+<a href="{{p.waHref}}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 52px; font-size: 16px; font-weight: 600; color: #F2B544">{{t.payWa}}</a>
+</div>
+</sc-for>
+<div style="font-size: 17px; font-weight: 600; color: {{balanceColor}}">{{balanceText}}</div>
+</div>
+
+</div>
+
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 22px; padding: 36px; background: #F6EBD9; color: #0B0B0B">
+<div style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 34px; line-height: 1.05">{{t.sumTitle}}</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{items}}" as="it" hint-placeholder-count="3">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-bottom: 12px; border-bottom: 1.5px solid rgba(11,11,11,0.25)">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 17px; font-weight: 600">{{it.label}}</span>
+<span style="font-size: 15px; line-height: 1.35">{{it.sub}}</span>
+</div>
+<span style="flex: none; font-size: 19px; font-weight: 600">{{it.amount}}</span>
+</div>
+</sc-for>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 16px">
+<span style="font-size: 16px; font-weight: 600; letter-spacing: 0.14em; color: #8A2F1C">{{t.payDue}}</span>
+<span style="font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(40px, 10vw, 56px); line-height: 1">{{totalText}}</span>
+</div>
+<a class="btn" href="{{mailtoPay}}" style="display: flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 26px; border-radius: 999px; background: #0B0B0B; color: #F6EBD9; font-size: 17px; font-weight: 600; text-decoration: none; text-align: center">{{t.payConfirm}}</a>
+<div style="font-size: 15px; line-height: 1.5">{{t.payNote}}</div>
+</div>
+
+</div>
+</sc-if>
+
+</div>
+</section>
+
+</sc-if>
+
+<!-- FOOTER -->
+<footer style="background: #0B0B0B; color: #F6EBD9">
+<div style="max-width: 1280px; margin: 0 auto; padding: 64px 32px; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<img src="img/cbaa8357ee0e737e7bfb1f0ea6cfa8a4.png" alt="Regis Point" style="height: 64px; width: auto; max-width: 100%; align-self: flex-start">
+<div style="font-size: 16px; color: #F2B544">Boutique Apartments &amp; Concierge Experiences</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px; font-size: 16px; line-height: 1.5; text-align: right">
+<div>José Reyes 51, Zona Colonial, Santo Domingo</div>
+<div>regispoint51@gmail.com</div>
+</div>
+</div>
+</footer>
+
+</div>
+</template>
+<script>
+class DCLogic {
+  setState(p) {
+    const patch = typeof p === 'function' ? p(this.state) : p;
+    this.state = Object.assign({}, this.state, patch);
+    if (this.__render) this.__render();
+  }
+}
+function DCStart(C) {
+  const inst = new C();
+  const app = document.getElementById('app');
+  const tpl = document.getElementById('tpl').content;
+  const HOLE = /\{\{\s*([\w.$]+)\s*\}\}/g, ONE = /^\{\{\s*([\w.$]+)\s*\}\}$/;
+  const get = (p, scope) => { let v = scope; for (const k of p.split('.')) { if (v == null) return undefined; v = v[k]; } return v; };
+  const BOOL = { disabled: 1, checked: 1, selected: 1, hidden: 1, readonly: 1, required: 1 };
+  const EV = { onclick: 'click', oninput: 'input', onchange: 'change' };
+  function build(node, scope, out) {
+    for (const n of Array.from(node.childNodes)) {
+      if (n.nodeType === 3) { out.appendChild(document.createTextNode(n.nodeValue.replace(HOLE, (_, p) => { const v = get(p, scope); return v == null || v === false ? '' : String(v); }))); continue; }
+      if (n.nodeType !== 1) continue;
+      const tag = n.localName;
+      if (tag === 'sc-if') { const m = (n.getAttribute('value') || '').match(ONE); if (m && get(m[1], scope)) build(n, scope, out); continue; }
+      if (tag === 'sc-for') {
+        const m = (n.getAttribute('list') || '').match(ONE); const as = n.getAttribute('as');
+        const list = m ? get(m[1], scope) : null;
+        if (Array.isArray(list)) list.forEach((item, i) => build(n, Object.assign(Object.create(scope), { [as]: item, index: i }), out));
+        continue;
+      }
+      const el = n.namespaceURI && n.namespaceURI !== 'http://www.w3.org/1999/xhtml' ? document.createElementNS(n.namespaceURI, n.localName) : document.createElement(n.localName);
+      for (const a of Array.from(n.attributes)) {
+        const name = a.name;
+        if (name.startsWith('hint-')) continue;
+        const one = a.value.match(ONE);
+        const lname = name.toLowerCase();
+        if (EV[lname]) { const fn = one ? get(one[1], scope) : null; if (typeof fn === 'function') el.addEventListener(EV[lname], fn); continue; }
+        if (one) {
+          const v = get(one[1], scope);
+          if (BOOL[lname]) { if (v) el.setAttribute(name, ''); continue; }
+          if (v == null || v === false) { if (lname === 'value') el.setAttribute('value', ''); continue; }
+          el.setAttribute(name, String(v));
+        } else el.setAttribute(name, a.value.replace(HOLE, (_, p) => { const v = get(p, scope); return v == null || v === false ? '' : String(v); }));
+      }
+      build(n, scope, el);
+      if (el.localName === 'input' && el.hasAttribute('value')) el.value = el.getAttribute('value');
+      out.appendChild(el);
+    }
+  }
+  inst.__render = () => {
+    const ae = document.activeElement; let idx = -1, ss = null, se = null;
+    if (ae && ae.tagName === 'INPUT') { idx = Array.from(app.querySelectorAll('input')).indexOf(ae); ss = ae.selectionStart; se = ae.selectionEnd; }
+    const y = window.scrollY;
+    const frag = document.createDocumentFragment();
+    build(tpl, inst.renderVals(), frag);
+    app.replaceChildren(frag);
+    window.scrollTo(0, y);
+    if (idx >= 0) { const el = app.querySelectorAll('input')[idx]; if (el) { el.focus(); try { el.setSelectionRange(ss, se); } catch (x) {} } }
+  };
+  inst.__render();
+}
+
+
+class Component extends DCLogic {
+state = { view: 'home', beach: 0, lang: 'en', guests: 2, combo: 0, cls: 0, trip: 0, pmode: 0, pn: 2, pnames: ['', '', '', '', '', '', '', ''], pamts: ['', '', '', '', '', '', '', ''], cname: '', cemail: '', cwa: '', carr: '', ci: {}, gc: { guests: 2 } };
+
+copy() {
+return {
+en: {
+menuTitle: 'What do you need?', menuSub: 'Tap one. Each opens its own screen.', backMenu: 'Menu', myPlan: 'My plan', tileAirport: 'Airport', tileBeaches: 'Beaches', tileTours: 'Tours', tileCooking: 'Cooking', tilePackages: 'Promos', tilePlan: 'My plan', from: 'from', savePkg: 'Save up to 20%', buildStay: 'Build your stay',
+bEyebrow: 'ESCAPE', bTitleA: 'To the beach.', bTitleB: 'Door to door.', bText: 'Private transfers from Regis Point to the Dominican coast. One price per vehicle, not per person.', bTag: 'ONE WAY ONLY', bPer: 'per vehicle, one way', bNote: 'Beach transfers are one way, from Regis Point to your destination. Round trips are only offered for the airport. Prices are per vehicle.', bAdd: 'Add this transfer', bAdded: 'Added to my plan', bSeePlan: 'See my plan', lblBeach: 'Transfer to', bAlt: 'Sedan', bAlt2: 'Minivan',
+bayahibe: 'Fishing-village charm and the departure point for Saona Island.', puntacana: 'White-sand beaches along the eastern coast.', terrenas: 'Palm-lined beaches on the Samaná peninsula.', galeras: 'The quiet tip of Samaná, close to Playa Rincón.',
+tileSpa: 'Spa', spaTile: 'from US$20', sEyebrow: 'RELAX', sTitleA: 'Unwind.', sTitleB: 'Without leaving the building.', sText: 'A private mini spa inside Regis Point, exclusively for our guests.', sBanner: 'DRAFT · SHOWING COST (US$ AT RD$60). SALE PRICES TO BE SET.', sCost: 'Cost', sTbd: 'Cost to be defined', sRef: 'Current menu price', gMass: 'MASSAGES', gTreat: 'RITUALS & FACIALS', gNails: 'NAILS & WAXING',
+gcPurposeOpts: ['Vacation', 'Business', 'Celebration', 'Family visit', 'Other'], gcSourceOpts: ['Airbnb', 'Instagram', 'Google', 'Friend or referral', 'Other'], gcCountryList: ['Argentina', 'Brazil', 'Canada', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Dominican Republic', 'Ecuador', 'El Salvador', 'France', 'Germany', 'Guatemala', 'Haiti', 'Honduras', 'Italy', 'Jamaica', 'Mexico', 'Netherlands', 'Panama', 'Peru', 'Puerto Rico', 'Spain', 'United Kingdom', 'United States', 'Uruguay', 'Venezuela'],
+tabGC: 'Check-in', gcEyebrow: 'GUEST CHECK-IN', gcTitleA: 'Welcome.', gcTitleB: 'Let’s check you in.', gcText: 'Fill in your details before you arrive so everything is ready when you walk in.', gcProp: 'APARTMENT', gcName: 'Full legal name (as on passport)', gcDob: 'Date of birth', gcNat: 'Nationality', gcDoc: 'Passport / ID number', gcCountry: 'Country of residence', gcPhone: 'Phone / WhatsApp', gcEmail: 'Email', gcCin: 'Arrival date', gcCout: 'Departure date', gcEta: 'Estimated arrival time', gcExtra: 'Additional guests (full names)', gcPurpose: 'Reason for your trip', gcSource: 'How did you hear about Regis Point?', gcGuestsQ: 'NUMBER OF GUESTS', gcPassTitle: 'PASSPORT OR ID', gcPassText: 'After you tap Send, attach a clear photo of your passport or ID to the email that opens, then send it.', gcSign: 'Signature (type your full name)', gcAgree: 'I confirm the information above is true and correct.', gcSend: 'Send my check-in', gcNeed: 'Complete the required fields to send.', gcSubject: 'Check-in', gcMailIntro: 'Hello, this is my guest check-in for Regis Point:', gcMailPass: 'I am attaching a photo of my passport / ID to this email.',
+tileCheckin: 'Early / Late', ciTile: 'from US$30', ciEyebrow: 'YOUR TIME', ciTitleA: 'Arrive earlier.', ciTitleB: 'Stay a little longer.', ciText: 'Settle in before check-in or enjoy a slow morning before you leave. Prices are per apartment.', ciIn: 'Check-in', ciOut: 'Check-out', ciSubject: 'Always subject to availability', ciCols: 'MON–THU · FRI–SAT', ciRulesTitle: 'GOOD TO KNOW', ciEarly: 'Early check-in', ciLate: 'Late check-out', ciSuper: 'Super early check-in', ciMidnight: 'midnight', ciAdd: 'Add', ciAdded: 'Added', ciPerApt: 'per apartment',
+ciRules: ['Before 07:00 we offer the full night instead. Late check-out until midnight is priced at the nightly rate.', 'Early check-in only if the apartment was free the night before or is ready in time.', 'Late check-out only if there is no check-in that day or cleaning can finish before 15:00.', 'Luggage storage is free.', 'Complimentary on stays of 5 nights or more and on direct bookings, subject to availability.'], ciNote: 'Charged with a payment link, confirmed in writing before the time. Your concierge confirms availability before you pay.',
+navPackages: 'Promos', navApts: 'Apartments', aptEyebrow: 'STAY WITH US', aptTitleA: 'Two apartments.', aptTitleB: 'One address.', aptText: 'Boutique apartments in the heart of the Zona Colonial, with the Regis Point concierge included. Pick your place and book it directly.', aptGuests: 'guests', aptBeds: 'bedrooms', aptBaths: 'baths', aptView: 'View on Airbnb', aptAsk: 'Ask about dates', aptPhotoSoon: 'Photos coming soon', aptStay: 'Book your stay', aptStayText: 'Add transfers, tours and a cooking night to your stay and we will take care of the rest.', aptPlan: 'Plan my stay', navTours: 'Tours', navCooking: 'Cooking', navPlan: 'Plan my stay',
+heroQ: 'How many are traveling?', heroSee: 'See options for my group', pricingFor: 'PRICED FOR', change: 'Change',
+tag2: 'WALKING TOUR + LUNCH', tour2Title: 'Walking Tour + Typical Dominican Lunch', tour2Desc: 'A morning on foot through the Zona Colonial, then a typical Dominican lunch cooked by a professional chef.', tourInc2: ['10:00 – 14:00, tour and lunch', 'A local guide, one for every 8 guests', 'Entrance fees and lunch included'], pkEyebrow: 'ALL THE PROMOS', pkSub1: 'Day combos', pkSub2: 'Super packages, transfer included', tourInc: ['A local guide, one for every 8 guests', 'Entrance fees included', 'Small groups, on foot through the Zona Colonial'], pkTitleA: 'Book it all.', pkTitleB: 'Save more.', pkText: 'Combine your transfer, a tour and a cooking night in one package and save compared with booking each one separately.', fitTag: 'BEST FOR YOUR GROUP', pkRegular: 'booked separately', pkSave: 'You save', pkSaveAll: 'in total', pkOff: 'SAVE', sumDiscount: 'Package savings',
+pkPopular: 'MOST POPULAR', pkChoose: 'Choose this package', pkChosen: 'Selected', pkLimit: 'Up to 6 guests', pkTotal: 'total for', pkTransfer: 'Round-trip airport transfer',
+pkNote: 'Prices in US dollars. The airport transfer is round trip, at the round-trip rate, charged per vehicle. For groups of 7 or 8, The Full Regis is not available; write to your concierge and we will adapt it.',
+pk: [
+{ name: 'The Welcome', desc: 'Land, settle in and see the old city the easy way.', inc: ['Colonial Walk & Dominican Lunch, 10:00 – 14:00'] },
+{ name: 'The Signature', desc: 'The classic Regis plan: the city by day, the kitchen by night.', inc: ['Walking tour, 15:30', 'Cooking class with wine, 19:00 – 22:00'] },
+{ name: 'The Full Regis', desc: 'Everything at once: walk, unwind and cook, with your ride arranged.', inc: ['Walking tour, 09:00', '30-minute massage at Regis Point, 16:00', 'Cooking class with wine, 19:00'] }
+],
+eyebrow: 'ZONA COLONIAL · SANTO DOMINGO',
+h1a: 'Santo Domingo,', h1b: 'arranged for you.',
+heroSub: 'Airport pickup, walking tours and cooking classes in the first city of the Americas, all booked in one place with your Regis Point concierge.',
+heroCta1: 'Build your stay', heroCta2: 'See the experiences',
+badge: 'One concierge for everything',
+rb1: 'AIRPORT TRANSFERS', rb2: 'WALKING TOURS', rb3: 'COOKING CLASSES', rb4: 'YOUR CONCIERGE',
+trust: [
+{ h: 'In the heart of the Zona Colonial', p: 'Everything starts a few steps from your door.' },
+{ h: 'One concierge, one place', p: 'Choose what you want and we arrange every detail.' },
+{ h: 'Confirmed first, paid after', p: 'We check availability, then send you a simple payment link.' }
+],
+tEyebrow: 'ARRIVE', tTitleA: 'Land.', tTitleB: 'Your ride is already arranged.',
+tText: 'A private transfer from Las Américas airport (SDQ) straight to Regis Point. Share your flight and we take care of the rest.',
+perVehicle: 'per vehicle, one way', rtOr: 'Round trip:', rtEach: 'each way',
+sedan: 'Sedan', sedanCap: 'Up to 4 guests', minivan: 'Minivan', minivanCap: 'Up to 8 guests',
+vDesc: 'Private vehicle, just for your group.',
+tNote: 'Prices are per vehicle, not per person. Book a round trip and each way costs less. Add it in the planner.',
+tCta: 'Add a transfer',
+toEyebrow: 'EXPLORE', toTitleA: 'The first city of the Americas,', toTitleB: 'on foot.',
+toText: 'Walk five centuries of history with a local guide. Small groups, one guide for every 8 guests, entrance fees included.',
+guestsLabel: 'GUESTS', fewer: 'Fewer guests', more: 'More guests', guest: 'guest', guests: 'guests',
+tierNote: 'The more of you, the less each pays. Solo travelers pay the 2-guest price per person.',
+perPerson: 'per person', for: 'for', add: 'Add to my stay', added: 'Added to my stay', unavailable: 'Up to 6 guests',
+tag3: 'UP TO 6 GUESTS', tag12: 'WALKING TOUR',
+combos: [
+{ title: 'Colonial Walk & Dominican Lunch', desc: 'A morning on foot through the Zona Colonial, then lunch cooked by a professional Dominican chef.', times: [{ h: '10:00 – 14:00', p: 'Walking tour + Dominican lunch' }] },
+{ title: 'Walk & Cook', desc: 'Explore the colonial streets in the afternoon, then cook your own dinner at night, with wine.', times: [{ h: '15:30', p: 'Walking tour of the Zona Colonial' }, { h: '19:00 – 22:00', p: 'Cooking class with wine' }] },
+{ title: 'The Full Regis Day', desc: 'A walking tour, a massage and a cooking class. One day, three ways to fall for the city.', times: [{ h: '09:00', p: 'Walking tour of the Zona Colonial' }, { h: '16:00', p: '30-minute relaxing massage at Regis Point' }, { h: '19:00', p: 'Cooking class with wine' }] },
+{ title: 'Zona Colonial Walking Tour', desc: 'Five centuries of history on foot with a local guide, through the first city of the Americas.', times: [] }
+],
+barText: 'Your plan so far:', barCta: 'Continue to payment',
+cEyebrow: 'COOK', cTitleA: 'Three kitchens.', cTitleB: 'One unforgettable night.',
+cText: 'Hands-on, three hours, in a colonial house three blocks from Regis Point. You cook, we pour, everyone eats.',
+dishes: [
+{ h: 'Dominican Kitchen', p: 'Learn the flavors of the island with a local chef, in a colonial kitchen full of aroma. Sizzling sofrito, slow-simmered stews, golden tostones and the secrets of a proper Dominican table. You cook it, then sit down and eat what you made.' },
+{ h: 'Italian Pasta', p: 'Flour, eggs and your own two hands. Roll, cut and shape fresh pasta from scratch, toss it in a sauce made right in front of you, and twirl it with a glass of wine in hand. Simple, golden and impossible to forget.' },
+{ h: 'Afro-Taíno Kitchen', p: 'The island\'s oldest flavors, rediscovered. Cassava, coconut, plantain and slow fire come together in a night of Taíno and African heritage, cooked by hand, shared at one long table, and finished with a toast.' }
+],
+included: ['Fresh ingredients', 'Wine, 1 bottle for every 2 guests', 'Tasting', 'Recipes to take home'],
+threeHours: '3 HOURS', cCta: 'Add a class', cNote: 'Pick your menu when you book. The class is already included in the Walk & Cook and Full Regis Day combos.',
+homeEyebrow: 'STAY', homeTitleA: 'Come home to', homeTitleB: 'the Zona Colonial.',
+homeText: 'Boutique apartments with the concierge built in, a few steps from everything above.',
+howTitle: 'From “I want that” to done in three steps.',
+steps: [
+{ n: '1', h: 'Tell us what you want', p: 'Use the planner below or write to your concierge.' },
+{ n: '2', h: 'We confirm', p: 'We check availability and lock in every detail for you.' },
+{ n: '3', h: 'Pay and enjoy', p: 'Pay it all yourself or split it between travelers. From there, we take care of everything.' }
+],
+payEyebrow: 'PAY', payTitleA: 'Pay your way.', payTitleB: 'Together or apart.', payText: 'One person can cover everything, or each traveler pays their own share. Everyone gets their own payment link.', payEmpty: 'Pick a transfer, a tour or a package first to see your payment options.', payBrowse: 'See the promos', payDetails: 'YOUR DETAILS', cName: 'Your name', cEmail: 'Email', cWa: 'WhatsApp', cArr: 'Arrival date and flight number', payWho: 'WHO IS PAYING?', pm0: 'One person pays all', pm1: 'Split equally', pm2: 'Choose each amount', payHowMany: 'HOW MANY PEOPLE ARE PAYING?', payName: 'Name', payNameN: 'Name of traveler', payShare: 'Share', payBtn: 'Pay', payReq: 'Request payment link', payWa: 'Send by WhatsApp', payLeft: 'Still to assign', payOver: 'Over by', payOk: 'The shares add up to the total.', payDue: 'TOTAL', payConfirm: 'Send my reservation to the concierge', payNote: 'We never ask for card details on this page. Each share opens its own secure payment link, and your concierge confirms availability before you pay.', sumPay: 'Continue to payment', payMailIntro: 'I would like to reserve this and pay as follows:', payMailShares: 'Payment split', payMailName: 'Name', payMailEmail: 'Email', payMailWa: 'WhatsApp', payMailArr: 'Arrival and flight', payWaMsg: 'Hi! This is my share for our Regis Point stay:', pEyebrow: 'PLAN', pTitleA: 'Build', pTitleB: 'your stay.',
+pText: 'Choose what you like and see your estimated total. Then continue to payment, together or apart.',
+stepGuests: '1 · HOW MANY OF YOU?', stepTransfer: '2 · AIRPORT TRANSFER', stepTour: '3 · TOUR OR COMBO', stepClass: '4 · COOKING CLASS',
+trip0: 'No transfer', trip1: 'One way', trip2: 'Round trip',
+vehicleSedan: 'For your group we use a sedan (up to 4 guests).', vehicleMini: 'For your group we use a minivan (up to 8 guests).',
+combo0: 'No tour', maxNote: 'The Full Regis Day is for up to 6 guests.',
+cls0: 'No class', cls1: 'Dominican Kitchen', cls2: 'Italian Pasta', cls3: 'Afro-Taíno Kitchen',
+classHintFree: 'US$68 per person. Pick your menu now or when we confirm.', classHintIncluded: 'Included in your tour combo. Tell us which menu you prefer.',
+sumTitle: 'Your selection', sumEmpty: 'Nothing selected yet. Start with a transfer, a tour or a class.', sumTotal: 'ESTIMATED TOTAL',
+sumCta: 'Send request to my concierge', sumNote: 'Estimate in US dollars. Final price and availability are confirmed by your concierge before you pay.',
+sumAlt: 'Prefer to write directly?',
+lblTrip1: 'Airport transfer, one way', lblTrip2: 'Airport transfer, round trip',
+subClass: 'included in your combo',
+mailSubject: 'Booking request · Regis Point', mailHello: 'Hello Regis Point concierge,', mailIntro: 'I would like to request the following:', mailGuests: 'Guests', mailTotal: 'Estimated total', mailEnd: 'My arrival date and flight number are:', mailThanks: 'Thank you!'
+},
+es: {
+menuTitle: '¿Qué necesitas?', menuSub: 'Toca una. Cada una abre su propia pantalla.', backMenu: 'Menú', myPlan: 'Mi plan', tileAirport: 'Aeropuerto', tileBeaches: 'Playas', tileTours: 'Tours', tileCooking: 'Cocina', tilePackages: 'Promos', tilePlan: 'Mi plan', from: 'desde', savePkg: 'Ahorra hasta 20%', buildStay: 'Arma tu estadía',
+bEyebrow: 'ESCAPA', bTitleA: 'A la playa.', bTitleB: 'De puerta a puerta.', bText: 'Traslados privados desde Regis Point hasta la costa dominicana. Un precio por vehículo, no por persona.', bTag: 'SOLO IDA', bPer: 'por vehículo, solo ida', bNote: 'Los traslados a las playas son solo de ida, desde Regis Point hasta tu destino. La ida y vuelta solo se ofrece para el aeropuerto. Los precios son por vehículo.', bAdd: 'Agregar este traslado', bAdded: 'Agregado a mi plan', bSeePlan: 'Ver mi plan', lblBeach: 'Traslado a', bAlt: 'Sedán', bAlt2: 'Minivan',
+bayahibe: 'Encanto de pueblo pesquero y punto de salida hacia Isla Saona.', puntacana: 'Playas de arena blanca en la costa del este.', terrenas: 'Playas bordeadas de palmeras en la península de Samaná.', galeras: 'La punta tranquila de Samaná, cerca de Playa Rincón.',
+tileSpa: 'Spa', spaTile: 'desde US$20', sEyebrow: 'RELÁJATE', sTitleA: 'Desconéctate.', sTitleB: 'Sin salir del edificio.', sText: 'Un mini spa privado dentro de Regis Point, exclusivo para nuestros huéspedes.', sBanner: 'BORRADOR · SE MUESTRA EL COSTO (US$ A RD$60). PRECIOS DE VENTA POR DEFINIR.', sCost: 'Costo', sTbd: 'Costo por definir', sRef: 'Precio actual del menú', gMass: 'MASAJES', gTreat: 'RITUALES Y FACIALES', gNails: 'UÑAS Y DEPILACIÓN',
+gcPurposeOpts: ['Vacaciones', 'Negocios', 'Celebración', 'Visita familiar', 'Otro'], gcSourceOpts: ['Airbnb', 'Instagram', 'Google', 'Amigo o referido', 'Otro'], gcCountryList: ['Argentina', 'Brasil', 'Canadá', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'República Dominicana', 'Ecuador', 'El Salvador', 'Francia', 'Alemania', 'Guatemala', 'Haití', 'Honduras', 'Italia', 'Jamaica', 'México', 'Países Bajos', 'Panamá', 'Perú', 'Puerto Rico', 'España', 'Reino Unido', 'Estados Unidos', 'Uruguay', 'Venezuela'],
+tabGC: 'Check-in', gcEyebrow: 'CHECK-IN DE HUÉSPEDES', gcTitleA: 'Bienvenido.', gcTitleB: 'Hagamos tu check-in.', gcText: 'Completa tus datos antes de llegar para que todo esté listo cuando entres.', gcProp: 'APARTAMENTO', gcName: 'Nombre legal completo (como en el pasaporte)', gcDob: 'Fecha de nacimiento', gcNat: 'Nacionalidad', gcDoc: 'Número de pasaporte / documento', gcCountry: 'País de residencia', gcPhone: 'Teléfono / WhatsApp', gcEmail: 'Correo', gcCin: 'Fecha de llegada', gcCout: 'Fecha de salida', gcEta: 'Hora estimada de llegada', gcExtra: 'Huéspedes adicionales (nombres completos)', gcPurpose: 'Motivo del viaje', gcSource: '¿Cómo supiste de Regis Point?', gcGuestsQ: 'NÚMERO DE HUÉSPEDES', gcPassTitle: 'PASAPORTE O DOCUMENTO', gcPassText: 'Después de tocar Enviar, adjunta una foto clara de tu pasaporte o documento al correo que se abre y envíalo.', gcSign: 'Firma (escribe tu nombre completo)', gcAgree: 'Confirmo que la información anterior es verdadera y correcta.', gcSend: 'Enviar mi check-in', gcNeed: 'Completa los campos obligatorios para enviar.', gcSubject: 'Check-in', gcMailIntro: 'Hola, este es mi check-in de huésped para Regis Point:', gcMailPass: 'Adjunto una foto de mi pasaporte / documento a este correo.',
+tileCheckin: 'Early / Late', ciTile: 'desde US$30', ciEyebrow: 'TU HORARIO', ciTitleA: 'Llega antes.', ciTitleB: 'Quédate un poco más.', ciText: 'Instálate antes del check-in o disfruta una mañana tranquila antes de irte. Los precios son por apartamento.', ciIn: 'Check-in', ciOut: 'Check-out', ciSubject: 'Siempre sujeto a disponibilidad', ciCols: 'DOM–JUE · VIE–SÁB', ciRulesTitle: 'BUENO SABER', ciEarly: 'Early check-in', ciLate: 'Late check-out', ciSuper: 'Super early check-in', ciMidnight: 'medianoche', ciAdd: 'Agregar', ciAdded: 'Agregado', ciPerApt: 'por apartamento',
+ciRules: ['Antes de las 07:00 ofrecemos la noche completa. El late check-out hasta medianoche se cobra al precio de la noche.', 'El early check-in solo si el apartamento estuvo libre la noche anterior o queda listo a tiempo.', 'El late check-out solo si ese día no hay check-in o la limpieza alcanza a terminar antes de las 15:00.', 'Guardar el equipaje es gratis.', 'Cortesía en estadías de 5 noches o más y en reservas directas, sujeta a disponibilidad.'], ciNote: 'Se cobra con link de pago, confirmado por escrito antes de la hora. Tu concierge confirma la disponibilidad antes de que pagues.',
+navPackages: 'Promos', navApts: 'Apartamentos', aptEyebrow: 'HOSPÉDATE', aptTitleA: 'Dos apartamentos.', aptTitleB: 'Una sola dirección.', aptText: 'Apartamentos boutique en el corazón de la Zona Colonial, con el concierge de Regis Point incluido. Elige tu lugar y reserva directo.', aptGuests: 'huéspedes', aptBeds: 'dormitorios', aptBaths: 'baños', aptView: 'Ver en Airbnb', aptAsk: 'Consultar fechas', aptPhotoSoon: 'Fotos próximamente', aptStay: 'Reserva tu estadía', aptStayText: 'Suma traslados, tours y una noche de cocina a tu estadía y nosotros nos encargamos del resto.', aptPlan: 'Planea tu estadía', navTours: 'Tours', navCooking: 'Cocina', navPlan: 'Planea tu estadía',
+heroQ: '¿Cuántos viajan?', heroSee: 'Ver opciones para mi grupo', pricingFor: 'PRECIOS PARA', change: 'Cambiar',
+tag2: 'TOUR A PIE + ALMUERZO', tour2Title: 'Tour a Pie + Almuerzo Típico Dominicano', tour2Desc: 'Una mañana a pie por la Zona Colonial y luego un almuerzo típico dominicano preparado por una chef profesional.', tourInc2: ['10:00 – 14:00, tour y almuerzo', 'Un guía local, uno por cada 8 huéspedes', 'Entradas y almuerzo incluidos'], pkEyebrow: 'TODAS LAS PROMOS', pkSub1: 'Combos de un día', pkSub2: 'Súper paquetes, traslado incluido', tourInc: ['Un guía local, uno por cada 8 huéspedes', 'Entradas incluidas', 'Grupos pequeños, a pie por la Zona Colonial'], pkTitleA: 'Resérvalo todo.', pkTitleB: 'Ahorra más.', pkText: 'Combina tu traslado, un tour y una noche de cocina en un solo paquete y ahorra frente a reservar cada cosa por separado.', fitTag: 'IDEAL PARA TU GRUPO', pkRegular: 'por separado', pkSave: 'Ahorras', pkSaveAll: 'en total', pkOff: 'AHORRA', sumDiscount: 'Ahorro por paquete',
+pkPopular: 'EL MÁS ELEGIDO', pkChoose: 'Elegir este paquete', pkChosen: 'Seleccionado', pkLimit: 'Hasta 6 huéspedes', pkTotal: 'total para', pkTransfer: 'Traslado del aeropuerto, ida y vuelta',
+pkNote: 'Precios en dólares. El traslado es de ida y vuelta, con la tarifa de ida y vuelta, y se cobra por vehículo. Para grupos de 7 u 8, El Regis Completo no está disponible; escríbele a tu concierge y lo adaptamos.',
+pk: [
+{ name: 'La Bienvenida', desc: 'Aterriza, instálate y conoce el casco antiguo sin complicaciones.', inc: ['Caminata Colonial y Almuerzo Dominicano, 10:00 – 14:00'] },
+{ name: 'La Firma', desc: 'El plan clásico Regis: la ciudad de día, la cocina de noche.', inc: ['Tour a pie, 15:30', 'Clase de cocina con vino, 19:00 – 22:00'] },
+{ name: 'El Regis Completo', desc: 'Todo junto: camina, relájate y cocina, con tu traslado listo.', inc: ['Tour a pie, 09:00', 'Masaje de 30 minutos en Regis Point, 16:00', 'Clase de cocina con vino, 19:00'] }
+],
+eyebrow: 'ZONA COLONIAL · SANTO DOMINGO',
+h1a: 'Santo Domingo,', h1b: 'organizado para ti.',
+heroSub: 'Traslado desde el aeropuerto, tours a pie y clases de cocina en la primera ciudad de América, todo reservado en un solo lugar con tu concierge de Regis Point.',
+heroCta1: 'Arma tu estadía', heroCta2: 'Ver las experiencias',
+badge: 'Un concierge para todo',
+rb1: 'TRASLADOS', rb2: 'TOURS A PIE', rb3: 'CLASES DE COCINA', rb4: 'TU CONCIERGE',
+trust: [
+{ h: 'En el corazón de la Zona Colonial', p: 'Todo empieza a pocos pasos de tu puerta.' },
+{ h: 'Un concierge, un solo lugar', p: 'Elige lo que quieres y organizamos cada detalle.' },
+{ h: 'Primero confirmamos, después pagas', p: 'Verificamos disponibilidad y te enviamos un link de pago sencillo.' }
+],
+tEyebrow: 'LLEGA', tTitleA: 'Aterriza.', tTitleB: 'Tu traslado ya está organizado.',
+tText: 'Traslado privado desde el aeropuerto Las Américas (SDQ) directo a Regis Point. Compártenos tu vuelo y nosotros nos encargamos del resto.',
+perVehicle: 'por vehículo, un trayecto', rtOr: 'Ida y vuelta:', rtEach: 'cada trayecto',
+sedan: 'Sedán', sedanCap: 'Hasta 4 huéspedes', minivan: 'Minivan', minivanCap: 'Hasta 8 huéspedes',
+vDesc: 'Vehículo privado, solo para tu grupo.',
+tNote: 'Los precios son por vehículo, no por persona. Si reservas ida y vuelta, cada trayecto cuesta menos. Agrégalo en el planificador.',
+tCta: 'Agregar traslado',
+toEyebrow: 'EXPLORA', toTitleA: 'La primera ciudad de América,', toTitleB: 'a pie.',
+toText: 'Recorre cinco siglos de historia con un guía local. Grupos pequeños, un guía por cada 8 huéspedes, entradas incluidas.',
+guestsLabel: 'HUÉSPEDES', fewer: 'Menos huéspedes', more: 'Más huéspedes', guest: 'huésped', guests: 'huéspedes',
+tierNote: 'Mientras más sean, menos paga cada uno. Quien viaja solo paga el precio por persona de 2 huéspedes.',
+perPerson: 'por persona', for: 'para', add: 'Agregar a mi estadía', added: 'Agregado a mi estadía', unavailable: 'Hasta 6 huéspedes',
+tag3: 'HASTA 6 HUÉSPEDES', tag12: 'TOUR A PIE',
+combos: [
+{ title: 'Caminata Colonial y Almuerzo Dominicano', desc: 'Una mañana a pie por la Zona Colonial y luego un almuerzo preparado por una chef dominicana profesional.', times: [{ h: '10:00 – 14:00', p: 'Tour a pie + almuerzo dominicano' }] },
+{ title: 'Camina y Cocina', desc: 'Recorre las calles coloniales por la tarde y por la noche cocina tu propia cena, con vino.', times: [{ h: '15:30', p: 'Tour a pie por la Zona Colonial' }, { h: '19:00 – 22:00', p: 'Clase de cocina con vino' }] },
+{ title: 'El Día Completo Regis', desc: 'Un tour a pie, un masaje y una clase de cocina. Un día, tres formas de enamorarte de la ciudad.', times: [{ h: '09:00', p: 'Tour a pie por la Zona Colonial' }, { h: '16:00', p: 'Masaje relajante de 30 minutos en Regis Point' }, { h: '19:00', p: 'Clase de cocina con vino' }] },
+{ title: 'Tour a Pie por la Zona Colonial', desc: 'Cinco siglos de historia a pie con un guía local, por la primera ciudad de América.', times: [] }
+],
+barText: 'Tu plan hasta ahora:', barCta: 'Continuar al pago',
+cEyebrow: 'COCINA', cTitleA: 'Tres cocinas.', cTitleB: 'Una noche inolvidable.',
+cText: 'Práctica, de tres horas, en una casa colonial a tres cuadras de Regis Point. Tú cocinas, nosotros servimos, todos comen.',
+dishes: [
+{ h: 'Cocina Dominicana', p: 'Aprende los sabores de la isla con una chef local, en una cocina colonial llena de aromas. Sofrito chisporroteando, guisos a fuego lento, tostones dorados y los secretos de una buena mesa dominicana. Lo cocinas tú y luego te sientas a comer lo que preparaste.' },
+{ h: 'Pasta Italiana', p: 'Harina, huevos y tus propias manos. Estira, corta y da forma a pasta fresca desde cero, mézclala con una salsa hecha frente a ti y disfrútala con una copa de vino en la mano. Simple, dorada e imposible de olvidar.' },
+{ h: 'Cocina Afro-Taína', p: 'Los sabores más antiguos de la isla, redescubiertos. Yuca, coco, plátano y fuego lento se unen en una noche de herencia taína y africana, cocinada a mano, compartida en una sola mesa larga y cerrada con un brindis.' }
+],
+included: ['Ingredientes frescos', 'Vino, 1 botella cada 2 personas', 'Degustación', 'Recetas para llevar'],
+threeHours: '3 HORAS', cCta: 'Agregar una clase', cNote: 'Elige tu menú al reservar. La clase ya está incluida en los combos Camina y Cocina y Día Completo Regis.',
+homeEyebrow: 'HOSPÉDATE', homeTitleA: 'Vuelve a casa en', homeTitleB: 'la Zona Colonial.',
+homeText: 'Apartamentos boutique con el concierge incluido, a pocos pasos de todo lo anterior.',
+howTitle: 'De “quiero eso” a listo en tres pasos.',
+steps: [
+{ n: '1', h: 'Dinos qué quieres', p: 'Usa el planificador de abajo o escríbele a tu concierge.' },
+{ n: '2', h: 'Nosotros confirmamos', p: 'Verificamos disponibilidad y dejamos cada detalle listo por ti.' },
+{ n: '3', h: 'Paga y disfruta', p: 'Paga todo tú o divídelo entre los viajeros. Desde ahí, nosotros nos encargamos de todo.' }
+],
+payEyebrow: 'PAGO', payTitleA: 'Paga a tu manera.', payTitleB: 'Juntos o por separado.', payText: 'Una persona puede pagar todo, o cada viajero paga su parte. Cada uno recibe su propio link de pago.', payEmpty: 'Elige primero un traslado, un tour o un paquete para ver tus opciones de pago.', payBrowse: 'Ver las promos', payDetails: 'TUS DATOS', cName: 'Tu nombre', cEmail: 'Correo', cWa: 'WhatsApp', cArr: 'Fecha de llegada y número de vuelo', payWho: '¿QUIÉN PAGA?', pm0: 'Una persona paga todo', pm1: 'Dividir en partes iguales', pm2: 'Elegir cada monto', payHowMany: '¿CUÁNTAS PERSONAS VAN A PAGAR?', payName: 'Nombre', payNameN: 'Nombre del viajero', payShare: 'Parte', payBtn: 'Pagar', payReq: 'Pedir link de pago', payWa: 'Enviar por WhatsApp', payLeft: 'Falta asignar', payOver: 'Te pasaste por', payOk: 'Las partes suman el total.', payDue: 'TOTAL', payConfirm: 'Enviar mi reserva al concierge', payNote: 'Nunca te pedimos los datos de la tarjeta en esta página. Cada parte abre su propio link de pago seguro, y tu concierge confirma la disponibilidad antes de que pagues.', sumPay: 'Continuar al pago', payMailIntro: 'Quisiera reservar esto y pagar de la siguiente forma:', payMailShares: 'División del pago', payMailName: 'Nombre', payMailEmail: 'Correo', payMailWa: 'WhatsApp', payMailArr: 'Llegada y vuelo', payWaMsg: 'Hola, esta es mi parte de nuestra estadía en Regis Point:', pEyebrow: 'PLANEA', pTitleA: 'Arma', pTitleB: 'tu estadía.',
+pText: 'Elige lo que te guste y mira tu total estimado. Luego pasa al pago, juntos o por separado.',
+stepGuests: '1 · ¿CUÁNTOS SON?', stepTransfer: '2 · TRASLADO DEL AEROPUERTO', stepTour: '3 · TOUR O COMBO', stepClass: '4 · CLASE DE COCINA',
+trip0: 'Sin traslado', trip1: 'Un trayecto', trip2: 'Ida y vuelta',
+vehicleSedan: 'Para tu grupo usamos un sedán (hasta 4 huéspedes).', vehicleMini: 'Para tu grupo usamos una minivan (hasta 8 huéspedes).',
+combo0: 'Sin tour', maxNote: 'El Día Completo Regis es para hasta 6 huéspedes.',
+cls0: 'Sin clase', cls1: 'Cocina Dominicana', cls2: 'Pasta Italiana', cls3: 'Cocina Afro-Taína',
+classHintFree: 'US$68 por persona. Elige tu menú ahora o cuando confirmemos.', classHintIncluded: 'Incluida en tu combo de tours. Dinos qué menú prefieres.',
+sumTitle: 'Tu selección', sumEmpty: 'Aún no has elegido nada. Empieza con un traslado, un tour o una clase.', sumTotal: 'TOTAL ESTIMADO',
+sumCta: 'Enviar solicitud a mi concierge', sumNote: 'Estimado en dólares. El precio final y la disponibilidad los confirma tu concierge antes de que pagues.',
+sumAlt: '¿Prefieres escribir directo?',
+lblTrip1: 'Traslado del aeropuerto, un trayecto', lblTrip2: 'Traslado del aeropuerto, ida y vuelta',
+subClass: 'incluida en tu combo',
+mailSubject: 'Solicitud de reserva · Regis Point', mailHello: 'Hola, concierge de Regis Point:', mailIntro: 'Quisiera solicitar lo siguiente:', mailGuests: 'Huéspedes', mailTotal: 'Total estimado', mailEnd: 'Mi fecha de llegada y número de vuelo son:', mailThanks: '¡Gracias!'
+}
+};
+}
+
+renderVals() {
+const s = this.state;
+const T = this.copy();
+const t = T[s.lang];
+const g = s.guests;
+const usd = (n) => 'US$' + n;
+const usdD = (n) => 'US$' + (Number.isInteger(n) ? n : n.toFixed(2));
+const tier = g <= 2 ? 0 : (g <= 4 ? 1 : (g <= 6 ? 2 : 3));
+const P = { 1: [65, 62, 57, 54], 2: [100, 97, 92, 89], 3: [135, 132, 127, 124], 4: [50, 47, 42, 39] };
+const REG = { 1: [65, 62, 57, 54], 2: [118, 115, 110, 107], 3: [153, 150, 145, 142] };
+const SEDAN = 42, MINI = 62, RT_SEDAN = 38, RT_MINI = 58;
+const OFF = [0, 0.05, 0.07, 0.10];
+const SEPOFF = { 2: 0.15, 3: 0.20 };
+const veh = g <= 4 ? { name: t.sedan, price: SEDAN, rt: RT_SEDAN } : { name: t.minivan, price: MINI, rt: RT_MINI };
+const pkgTot = (c) => { const vv = veh.rt * 2; const withCombo = vv + P[c][tier] * g; if (c === 1) return Math.round(withCombo * (1 - OFF[1])); return Math.min(withCombo, Math.round((vv + REG[c][tier] * g) * (1 - SEPOFF[c]))); };
+const guestsText = g + ' ' + (g === 1 ? t.guest : t.guests);
+
+const setG = (n) => {
+const next = Math.max(1, Math.min(8, n));
+const patch = { guests: next };
+if (s.combo === 3 && next > 6) patch.combo = 2;
+this.setState(patch);
+};
+
+const comboPrice = s.combo ? P[s.combo][tier] * g : 0;
+const clsInc = s.combo === 2 || s.combo === 3;
+const clsPrice = (s.cls && !clsInc) ? 68 * g : 0;
+const tripPrice = s.trip === 2 ? veh.rt * 2 : (s.trip === 1 ? veh.price : 0);
+const BEACHES = [
+{ key: 'bayahibe', name: 'Bayahibe', sedan: 119, mini: 145 },
+{ key: 'puntacana', name: 'Punta Cana', sedan: 149, mini: 179 },
+{ key: 'terrenas', name: 'Las Terrenas', sedan: 161, mini: 229 },
+{ key: 'galeras', name: 'Las Galeras', sedan: 199, mini: 259 }
+];
+const bch = s.beach ? BEACHES[s.beach - 1] : null;
+const beachPrice = bch ? (g <= 4 ? bch.sedan : bch.mini) : 0;
+const bundle = s.trip === 2 && s.combo >= 1 && s.combo <= 3;
+const comboLine = bundle ? REG[s.combo][tier] * g : comboPrice;
+const discAmt = bundle ? Math.max(0, tripPrice + comboLine - pkgTot(s.combo)) : 0;
+const CI_UNITS = [
+{ key: 'b', name: 'Balcony Lounge', rows: [['e', '07:00', 90], ['e', '11:00', 50], ['e', '13:00', 30], ['l', '13:00', 30], ['l', '15:00', 50], ['l', '17:00', 90], ['l', '00:00', 185]] },
+{ key: 'p', name: 'Penthouse', rows: [['e', '07:00', 140], ['e', '11:00', 80], ['e', '13:00', 45], ['l', '13:00', 45], ['l', '15:00', 80], ['l', '17:00', 110], ['l', '00:00', 200]] }
+];
+const ciHour = (r) => (r[1] === '00:00' ? t.ciMidnight : r[1]);
+const ciLabel = (r) => (r[0] === 'e' ? (r[1] === '07:00' ? t.ciSuper : t.ciEarly) : t.ciLate);
+const ciSel = [];
+CI_UNITS.forEach((u) => u.rows.forEach((r) => { if (s.ci[u.key + r[0]] === r[1]) ciSel.push({ label: ciLabel(r) + ' ' + ciHour(r) + ' · ' + u.name, price: r[2] }); }));
+const ciTotal = ciSel.reduce((a, b) => a + b.price, 0);
+const total = comboLine + clsPrice + tripPrice + beachPrice + ciTotal - discAmt;
+
+const items = [];
+if (s.trip) items.push({ label: s.trip === 2 ? t.lblTrip2 : t.lblTrip1, sub: veh.name + ' · ' + guestsText, amount: usd(tripPrice) });
+if (bch) items.push({ label: t.lblBeach + ' ' + bch.name + ' · ' + t.bTag.toLowerCase(), sub: veh.name + ' · ' + guestsText, amount: usd(beachPrice) });
+if (s.combo) items.push({ label: t.combos[s.combo - 1].title, sub: guestsText + ' × ' + usd(bundle ? REG[s.combo][tier] : P[s.combo][tier]), amount: usd(comboLine) });
+const clsName = s.cls === 1 ? t.cls1 : (s.cls === 2 ? t.cls2 : (s.cls === 3 ? t.cls3 : ''));
+if (s.cls && !clsInc) items.push({ label: t.stepClass.replace(/^\d · /, '').toLowerCase().replace(/^./, (c) => c.toUpperCase()) + ' · ' + clsName, sub: guestsText + ' × US$68', amount: usd(clsPrice) });
+if (s.cls && clsInc) items.push({ label: clsName, sub: t.subClass, amount: '' });
+
+ciSel.forEach((c) => items.push({ label: c.label, sub: t.ciPerApt, amount: usd(c.price) }));
+if (discAmt) items.push({ label: t.sumDiscount, sub: '', amount: '−' + usd(discAmt) });
+const lines = [t.mailHello, '', t.mailIntro];
+items.forEach((it) => lines.push('- ' + it.label + ' (' + it.sub + ')' + (it.amount ? ': ' + it.amount : '')));
+lines.push('', t.mailGuests + ': ' + g, t.mailTotal + ': ' + usd(total), '', t.mailEnd, '', t.mailThanks);
+const mailto = 'mailto:regispoint51@gmail.com?subject=' + encodeURIComponent(t.mailSubject) + '&body=' + encodeURIComponent(lines.join('\n'));
+
+
+const PAY_HANDLE = 'regispoint';
+const n = s.pmode === 0 ? 1 : Math.max(2, Math.min(s.pn, g, 8));
+const cents = Math.round(total * 100);
+const base = Math.floor(cents / n);
+const fmt = (c) => 'US$' + (c % 100 === 0 ? String(c / 100) : (c / 100).toFixed(2));
+const amtCents = [];
+for (let i = 0; i < n; i++) {
+if (s.pmode === 2) amtCents.push(Math.max(0, Math.round((parseFloat(s.pamts[i]) || 0) * 100)));
+else amtCents.push(base + (i === 0 ? cents - base * n : 0));
+}
+const assigned = amtCents.reduce((a, b) => a + b, 0);
+const diff = cents - assigned;
+const payers = amtCents.map((c, i) => {
+const nm = i === 0 ? s.cname : s.pnames[i];
+const display = s.pmode === 0 ? s.cname : s.pnames[i];
+const ok = c > 0 && (s.pmode !== 2 || diff === 0);
+const handleOk = PAY_HANDLE !== '';
+const amt = (c / 100).toFixed(2);
+const reqBody = t.payMailIntro + '\n\n' + items.map((it) => '- ' + it.label + (it.amount ? ': ' + it.amount : '')).join('\n') + '\n\n' + t.mailGuests + ': ' + g + '\n' + t.mailTotal + ': ' + usd(total) + '\n' + t.payMailShares + ': ' + (display || (t.payNameN + ' ' + (i + 1))) + ' ' + fmt(c) + '\n' + t.payMailName + ': ' + (s.cname || '') + '\n' + t.payMailEmail + ': ' + (s.cemail || '') + '\n' + t.payMailWa + ': ' + (s.cwa || '') + '\n' + t.payMailArr + ': ' + (s.carr || '');
+return {
+nameLabel: s.pmode === 0 ? t.cName : t.payNameN + ' ' + (i + 1),
+name: s.pmode === 0 ? s.cname : s.pnames[i],
+setName: (e) => { const v = e.target.value; if (s.pmode === 0) this.setState({ cname: v }); else { const a = s.pnames.slice(); a[i] = v; this.setState({ pnames: a }); } },
+editable: s.pmode === 2, fixed: s.pmode !== 2,
+amtVal: s.pamts[i],
+setAmt: (e) => { const a = s.pamts.slice(); a[i] = e.target.value; this.setState({ pamts: a }); },
+amountText: fmt(c),
+payHref: !ok ? '#checkout' : (handleOk ? 'https://www.paypal.me/' + PAY_HANDLE + '/' + amt + 'USD' : 'mailto:regispoint51@gmail.com?subject=' + encodeURIComponent(t.mailSubject) + '&body=' + encodeURIComponent(reqBody)),
+btnText: handleOk ? t.payBtn + ' ' + fmt(c) : t.payReq + ' · ' + fmt(c),
+btnOpacity: ok ? 1 : 0.45,
+waHref: 'https://wa.me/?text=' + encodeURIComponent(t.payWaMsg + ' ' + fmt(c) + (handleOk ? ' https://www.paypal.me/' + PAY_HANDLE + '/' + amt + 'USD' : ''))
+};
+});
+const balanceText = s.pmode !== 2 ? '' : (diff === 0 ? t.payOk : (diff > 0 ? t.payLeft + ' ' + fmt(diff) : t.payOver + ' ' + fmt(-diff)));
+const balanceColor = diff === 0 ? '#F2B544' : '#FFD98A';
+const modeChips = [0, 1, 2].map((v) => {
+const dis = v > 0 && g < 2;
+return { label: t['pm' + v], on: s.pmode === v, disabled: dis, opacity: dis ? 0.4 : 1, bg: s.pmode === v ? '#F6EBD9' : 'transparent', fg: s.pmode === v ? '#0B0B0B' : '#F6EBD9', pick: () => this.setState({ pmode: v }) };
+});
+const countChips = [];
+for (let k = 2; k <= Math.min(g, 8); k++) countChips.push({ label: String(k), on: n === k, bg: n === k ? '#F6EBD9' : 'transparent', fg: n === k ? '#0B0B0B' : '#F6EBD9', pick: () => this.setState({ pn: k }) });
+const mailtoPay = (() => {
+const sh = amtCents.map((c, i) => '- ' + ((s.pmode === 0 ? s.cname : s.pnames[i]) || (t.payNameN + ' ' + (i + 1))) + ': ' + fmt(c)).join('\n');
+const body = t.payMailIntro + '\n\n' + items.map((it) => '- ' + it.label + (it.amount ? ': ' + it.amount : '')).join('\n') + '\n\n' + t.mailGuests + ': ' + g + '\n' + t.mailTotal + ': ' + usd(total) + '\n\n' + t.payMailShares + ':\n' + sh + '\n\n' + t.payMailName + ': ' + (s.cname || '') + '\n' + t.payMailEmail + ': ' + (s.cemail || '') + '\n' + t.payMailWa + ': ' + (s.cwa || '') + '\n' + t.payMailArr + ': ' + (s.carr || '');
+return 'mailto:regispoint51@gmail.com?subject=' + encodeURIComponent(t.mailSubject) + '&body=' + encodeURIComponent(body);
+})();
+
+const on = (b) => (b ? { bg: '#0B0B0B', fg: '#F6EBD9' } : { bg: 'transparent', fg: '#0B0B0B' });
+
+const tripChips = [0, 1, 2].map((v) => ({
+label: t['trip' + v], on: s.trip === v, bg: on(s.trip === v).bg, fg: on(s.trip === v).fg,
+pick: () => this.setState({ trip: v })
+}));
+const guestChips = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({
+label: String(n), on: g === n, bg: on(g === n).bg, fg: on(g === n).fg,
+pick: () => setG(n)
+}));
+const pkMeta = [
+{ c: 1, bg: '#0B0B0B', fg: '#F6EBD9', accent: '#F2B544', rule: 'rgba(246,235,217,0.3)', img: 'img/2ad49cef32641ac817b8de74cde54d9a.jpg', pos: '62% 50%' },
+{ c: 2, bg: '#B9472F', fg: '#FFF6E8', accent: '#FFD98A', rule: 'rgba(255,246,232,0.35)', img: 'img/6d6cc70a430a921f4ecdccb52783384f.jpg', pos: '50% 35%' },
+{ c: 3, bg: '#0B0B0B', fg: '#F6EBD9', accent: '#F2B544', rule: 'rgba(246,235,217,0.3)', img: 'img/60af880a0b5c2bee3d7de2873ff15c29.jpg', pos: '50% 45%' }
+];
+const packages = pkMeta.map((m) => {
+const d = t.pk[m.c - 1];
+const dis = m.c === 3 && g > 6;
+const sel = s.combo === m.c && s.trip === 2;
+const reg = veh.rt * 2 + REG[m.c][tier] * g;
+const tot = pkgTot(m.c);
+const off = reg - tot;
+return {
+name: d.name, desc: d.desc,
+inc: [{ label: t.pkTransfer + ' · ' + veh.name }].concat(d.inc.map((label) => ({ label }))),
+bg: m.bg, fg: m.fg, accent: m.accent, rule: m.rule, img: m.img, pos: m.pos,
+border: sel ? '#F2B544' : 'transparent', popular: m.c === 2,
+pp: usdD(tot / g), regPP: usdD(reg / g), saveText: t.pkSave + ' ' + usd(off) + ' ' + t.pkSaveAll, offText: t.pkOff + ' ' + Math.round(off / reg * 100) + '%',
+totalText: dis ? t.pkLimit : (t.pkTotal + ' ' + guestsText + ': ' + usd(tot)),
+btnBg: sel ? '#F2B544' : '#F6EBD9', btnFg: '#0B0B0B',
+btnText: dis ? t.pkLimit : (sel ? t.pkChosen : t.pkChoose),
+btnOpacity: dis ? 0.5 : 1, disabled: dis,
+pick: () => this.setState(sel ? { trip: 0, combo: 0 } : { trip: 2, combo: m.c })
+};
+});
+const comboChips = [0, 4, 1, 2, 3].map((v) => {
+const dis = v === 3 && g > 6;
+return {
+label: v === 0 ? t.combo0 : t.combos[v - 1].title, on: s.combo === v, disabled: dis, opacity: dis ? 0.4 : 1,
+bg: on(s.combo === v).bg, fg: on(s.combo === v).fg,
+pick: () => this.setState({ combo: v })
+};
+});
+const incl = clsInc;
+const classChips = [0, 1, 2, 3].map((v) => ({
+label: t['cls' + v], on: s.cls === v, disabled: false, opacity: 1,
+bg: on(s.cls === v).bg, fg: on(s.cls === v).fg,
+pick: () => this.setState({ cls: v })
+}));
+
+const combos = [1, 2, 3].map((c) => {
+const sel = s.combo === c;
+const dis = c === 3 && g > 6;
+const light = c === 2;
+const price = P[c][tier];
+return {
+n: '0' + c, img: ['img/6d6cc70a430a921f4ecdccb52783384f.jpg', 'img/38f2d301de7ea1fa0863f9749b2bc609.jpg', 'img/60af880a0b5c2bee3d7de2873ff15c29.jpg'][c - 1], pos: ['50% 35%', '50% 50%', '50% 45%'][c - 1],
+tag: c === 3 ? t.tag3 : t.tag12,
+title: t.combos[c - 1].title, desc: t.combos[c - 1].desc, times: t.combos[c - 1].times,
+price: usd(price),
+hasSave: REG[c][tier] > price, regPP: usd(REG[c][tier]), saveText: t.pkSave + ' ' + usd((REG[c][tier] - price) * g) + ' ' + t.pkSaveAll,
+totalText: dis ? t.unavailable : (t.for + ' ' + guestsText + ': ' + usd(price * g)),
+bg: light ? '#F6EBD9' : '#222222', fg: light ? '#0B0B0B' : '#F6EBD9',
+accent: light ? '#8A2F1C' : '#F2B544', rule: light ? 'rgba(11,11,11,0.3)' : 'rgba(246,235,217,0.3)',
+border: sel ? '#F2B544' : 'transparent',
+btnBg: sel ? '#F2B544' : (light ? '#0B0B0B' : '#F6EBD9'),
+btnFg: sel ? '#0B0B0B' : (light ? '#F6EBD9' : '#0B0B0B'),
+btnText: dis ? t.unavailable : (sel ? t.added : t.add),
+btnOpacity: dis ? 0.5 : 1, disabled: dis,
+pick: () => this.setState({ combo: sel ? 0 : c })
+};
+});
+
+const tour = {
+border: s.combo === 4 ? '#F2B544' : 'transparent',
+title: t.combos[3].title, desc: t.combos[3].desc, inc: t.tourInc.map((label) => ({ label })),
+price: usd(P[4][tier]), totalText: t.for + ' ' + guestsText + ': ' + usd(P[4][tier] * g),
+btnBg: s.combo === 4 ? '#F2B544' : '#F6EBD9',
+btnText: s.combo === 4 ? t.added : t.add,
+pick: () => this.setState({ combo: s.combo === 4 ? 0 : 4 })
+};
+
+const tour2 = {
+border: s.combo === 1 ? '#F2B544' : 'transparent',
+title: t.tour2Title, desc: t.tour2Desc, inc: t.tourInc2.map((label) => ({ label })),
+price: usd(P[1][tier]), totalText: t.for + ' ' + guestsText + ': ' + usd(P[1][tier] * g),
+btnBg: s.combo === 1 ? '#F2B544' : '#F6EBD9',
+btnText: s.combo === 1 ? t.added : t.add,
+pick: () => this.setState({ combo: s.combo === 1 ? 0 : 1 })
+};
+
+const go = (v, anchor) => (e) => {
+if (e && e.preventDefault) e.preventDefault();
+this.setState({ view: v });
+setTimeout(() => { try { const el = anchor ? document.getElementById(anchor) : null; if (el) el.scrollIntoView({ behavior: 'smooth' }); else window.scrollTo(0, 0); } catch (x) {} }, 80);
+};
+const APT_LINKS = ['https://www.airbnb.com/rooms/1430354975989797743', 'https://www.airbnb.com/rooms/1436185655754798885'];
+const aptEn = s.lang === 'en';
+const APT_DATA = [
+{ tag: aptEn ? 'UNIT 1 · ROOFTOP' : 'UNIDAD 1 · ROOFTOP', name: 'The Colonial Penthouse', facts: '6 ' + t.aptGuests + ' · 3 ' + t.aptBeds + ' · 2 ' + t.aptBaths + ' · 140 m² + 140 m² ' + (aptEn ? 'terrace' : 'terraza'), rating: '★ 4.81 · 48 ' + (aptEn ? 'reviews on Airbnb' : 'reseñas en Airbnb'),
+desc: aptEn ? 'A three-bedroom penthouse in the Zona Colonial with a private rooftop terrace, heated jacuzzi, sun loungers and a pergola with string lights. A short walk from restaurants, cafés, museums and landmarks.' : 'Penthouse de tres dormitorios en la Zona Colonial con terraza privada en el rooftop, jacuzzi climatizado, camastros y una pérgola con luces. A pocos pasos de restaurantes, cafés, museos y monumentos.',
+points: aptEn ? ['Private rooftop with heated jacuzzi, open all year', 'One king and two queen beds', 'Full kitchen, A/C, Wi-Fi and a dedicated work area', 'Sound-insulated windows'] : ['Rooftop privado con jacuzzi climatizado, abierto todo el año', 'Una cama king y dos queen', 'Cocina completa, A/C, Wi-Fi y espacio de trabajo', 'Ventanas con aislamiento acústico'],
+photos: [{ src: 'img/b650ad6bc282be3016506909d68f25b3.jpg', alt: 'Private jacuzzi on the Colonial Penthouse rooftop terrace', pos: '50% 50%' },{ src: 'img/59987d03b8a00b871c3d0ca0264b5fe8.jpg', alt: 'Couple toasting on the Regis Point terrace', pos: '62% 50%' }] },
+{ tag: aptEn ? 'UNIT 2 · BALCONIES' : 'UNIDAD 2 · BALCONES', name: 'The Balcony Lounge', facts: '6 ' + t.aptGuests + ' · 3 ' + t.aptBeds + ' · 2 ' + t.aptBaths + ' · 140 m²', rating: '★ 4.89 · 57 ' + (aptEn ? 'reviews on Airbnb' : 'reseñas en Airbnb'),
+desc: aptEn ? 'An elegant, modern three-bedroom apartment in the heart of the colonial zone of Santo Domingo, with two balconies and historic landmarks close by.' : 'Apartamento elegante y moderno de tres dormitorios en el corazón de la zona colonial de Santo Domingo, con dos balcones y los monumentos históricos muy cerca.',
+points: aptEn ? ['Two balconies with outdoor seating', 'One king and two queen beds', 'Kitchen with oven and coffee makers', 'A/C, Wi-Fi and TV'] : ['Dos balcones con zona para sentarse', 'Una cama king y dos queen', 'Cocina con horno y cafeteras', 'A/C, Wi-Fi y TV'],
+photos: [{ src: 'img/43486fd8f91e187da9208c10c1ec2963.jpg', alt: 'Living room of The Balcony Lounge with sofa and wood paneling', pos: '50% 50%' }, { src: 'img/53d07a094b86fc792879a6d0d229e6f5.jpg', alt: 'Dining area of The Balcony Lounge', pos: '50% 50%' }] }
+];
+const aptCards = APT_DATA.map((a, i) => ({
+tag: a.tag, name: a.name, facts: a.facts, rating: a.rating, desc: a.desc,
+points: a.points.map((x) => ({ text: x })), photos: a.photos, noPhoto: a.photos.length === 0,
+href: APT_LINKS[i] || ('mailto:regispoint51@gmail.com?subject=' + encodeURIComponent(a.name)),
+cta: APT_LINKS[i] ? t.aptView : t.aptAsk
+}));
+const beachCards = BEACHES.map((b, i) => {
+const sel = s.beach === i + 1;
+return {
+name: b.name, blurb: t[b.key], vname: veh.name, price: usd(g <= 4 ? b.sedan : b.mini),
+other: t.bAlt + ' ' + usd(b.sedan) + ' · ' + t.bAlt2 + ' ' + usd(b.mini),
+border: sel ? '#F2B544' : 'transparent', btnBg: sel ? '#F2B544' : '#F6EBD9',
+btnText: sel ? t.bAdded : t.bAdd,
+pick: () => this.setState({ beach: sel ? 0 : i + 1 })
+};
+});
+const rd = (n) => 'RD$' + n.toLocaleString('en-US');
+const spaData = [
+{ head: t.gMass, items: [
+[68, 'Relaxing Massage', 'Masaje Relajante', 0, 60], [68, 'Lymphatic Drainage', 'Drenaje Linfático', 0, 60], [70, 'Relaxing + Lymphatic Drainage', 'Relajante + Drenaje Linfático', 0, 60], [70, 'Strong Muscle Massage', 'Masaje Fuerte Muscular', 0, 60], [70, 'Relaxing Massage + Hot Stones', 'Masaje Relajante + Piedras Calientes', 0, 60] ] },
+{ head: t.gTreat, items: [
+[80, 'Exfoliation + Massage + Hydration', 'Exfoliación + Masaje + Hidratación'], [75, 'Exfoliation + Hydration', 'Exfoliación + Hidratación'], [99, 'Chocolate Wrap · 45 min', 'Envoltura de Chocolate · 45 min'], [75, 'Deep Facial Cleansing', 'Limpieza Facial Profunda'], [65, 'Microdermabrasion + Ultrasonic Peeling', 'Microdermoabrasión + Peeling Ultrasónico'] ] },
+{ head: t.gNails, items: [
+[25, 'Spa Manicure', 'Manicura Spa'], [30, 'Spa Pedicure', 'Pedicura Spa'], [50, 'Manicure + Pedicure', 'Manicura + Pedicura'], [20, 'Gel Polish', 'Esmaltado en Gel'], [25, 'Underarm Waxing', 'Depilación de Axilas'], [30, 'Bikini Waxing', 'Depilación de Bikini'], [40, 'Leg Waxing', 'Depilación de Piernas'], [20, 'Eyebrow Waxing', 'Depilación de Cejas'] ] }
+];
+const spaRows = [];
+spaData.forEach((grp) => {
+spaRows.push({ isHead: true, isItem: false, title: grp.head, name: '', cost: '', note: '', dur: '' });
+grp.items.forEach((it) => {
+spaRows.push({ isHead: false, isItem: true, title: '', name: s.lang === 'es' ? it[2] : it[1], cost: 'US$' + it[0], note: '', dur: it[4] ? '· ' + it[4] + ' min' : '' });
+});
+});
+const ciRows = [];
+CI_UNITS.forEach((u) => {
+ciRows.push({ isHead: true, isItem: false, title: u.name, name: '', hour: '', week: '', btnText: '', btnBg: '', pick: null });
+u.rows.forEach((r) => {
+const grp = u.key + r[0];
+const sel = s.ci[grp] === r[1];
+ciRows.push({ isHead: false, isItem: true, title: '', name: ciLabel(r), hour: ciHour(r), week: usd(r[2]), btnText: sel ? t.ciAdded : t.ciAdd, btnBg: sel ? '#F2B544' : '#0B0B0B', btnFg: sel ? '#0B0B0B' : '#F6EBD9', pick: () => { const c = Object.assign({}, s.ci); if (sel) delete c[grp]; else c[grp] = r[1]; this.setState({ ci: c }); } });
+});
+});
+const ciRules = t.ciRules.map((label) => ({ label }));
+const gc = s.gc;
+const gcSetK = (k) => (e) => this.setState({ gc: Object.assign({}, s.gc, { [k]: e.target.value }) });
+const gcToday = new Date().toISOString().slice(0, 10);
+const gcDefs = [
+['name', 'text', t.gcName, 'name', 'text', '', '', ''],
+['dob', 'date', t.gcDob, 'bday', '', '', '1900-01-01', gcToday],
+['nat', 'text', t.gcNat, 'off', 'text', 'gc-countries', '', ''],
+['doc', 'text', t.gcDoc, 'off', 'text', '', '', ''],
+['country', 'text', t.gcCountry, 'country-name', 'text', 'gc-countries', '', ''],
+['phone', 'tel', t.gcPhone, 'tel', 'tel', '', '', ''],
+['email', 'email', t.gcEmail, 'email', 'email', '', '', ''],
+['cin', 'date', t.gcCin, 'off', '', '', gcToday, ''],
+['cout', 'date', t.gcCout, 'off', '', '', gc.cin || gcToday, ''],
+['eta', 'time', t.gcEta, 'off', '', '', '', ''],
+['extra', 'text', t.gcExtra, 'off', 'text', '', '', '']
+];
+const gcFields = gcDefs.map((d) => ({ label: d[2], type: d[1], ac: d[3], im: d[4], list: d[5], min: d[6], max: d[7], value: gc[d[0]] || '', set: gcSetK(d[0]) }));
+const gcCountries = t.gcCountryList.map((v) => ({ v }));
+const gcPick = (k, v) => () => this.setState({ gc: Object.assign({}, s.gc, { [k]: s.gc[k] === v ? '' : v }) });
+const gcPurposeChips = t.gcPurposeOpts.map((v) => ({ label: v, on: gc.purpose === v, bg: gc.purpose === v ? '#F6EBD9' : 'transparent', fg: gc.purpose === v ? '#0B0B0B' : '#F6EBD9', pick: gcPick('purpose', v) }));
+const gcSourceChips = t.gcSourceOpts.map((v) => ({ label: v, on: gc.source === v, bg: gc.source === v ? '#F6EBD9' : 'transparent', fg: gc.source === v ? '#0B0B0B' : '#F6EBD9', pick: gcPick('source', v) }));
+const GC_PROPS = ['Penthouse', 'Balcony Lounge'];
+const gcPropChips = GC_PROPS.map((nm, i) => ({ label: nm, on: gc.prop === i + 1, bg: gc.prop === i + 1 ? '#F6EBD9' : 'transparent', fg: gc.prop === i + 1 ? '#0B0B0B' : '#F6EBD9', pick: () => this.setState({ gc: Object.assign({}, s.gc, { prop: i + 1 }) }) }));
+const gcGuestChips = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({ label: String(n), on: gc.guests === n, bg: gc.guests === n ? '#F6EBD9' : 'transparent', fg: gc.guests === n ? '#0B0B0B' : '#F6EBD9', pick: () => this.setState({ gc: Object.assign({}, s.gc, { guests: n }) }) }));
+const gcReady = !!(gc.prop && gc.name && gc.dob && gc.nat && gc.country && gc.phone && gc.email && gc.cin && gc.cout && gc.sign && gc.agree);
+const gcLines = [t.gcMailIntro, '', t.gcProp + ': ' + (gc.prop ? GC_PROPS[gc.prop - 1] : '')];
+gcDefs.forEach((d) => gcLines.push(d[2] + ': ' + (gc[d[0]] || '')));
+gcLines.push(t.gcPurpose + ': ' + (gc.purpose || ''), t.gcSource + ': ' + (gc.source || ''));
+gcLines.push(t.gcGuestsQ + ': ' + gc.guests, t.gcSign + ': ' + (gc.sign || ''), '', t.gcMailPass);
+const gcHref = gcReady ? 'mailto:regispoint51@gmail.com?subject=' + encodeURIComponent(t.gcSubject + ' · ' + gc.name) + '&body=' + encodeURIComponent(gcLines.join('\n')) : '#guestci';
+const tileSub = {
+checkin: t.ciTile,
+airport: t.from + ' ' + usd(veh.price),
+beaches: t.from + ' ' + usd(g <= 4 ? 119 : 145),
+tours: t.from + ' ' + usd(P[4][tier]) + ' ' + t.perPerson,
+cooking: usd(68) + ' ' + t.perPerson,
+spa: t.spaTile,
+packages: t.savePkg,
+plan: items.length ? usd(total) : t.buildStay
+};
+const vehicles = [
+{ name: t.sedan, cap: t.sedanCap, fit: g <= 4, opacity: 1, desc: t.vDesc, price: usd(SEDAN), rtText: usd(RT_SEDAN), bg: '#0B0B0B', fg: '#F6EBD9', bodyY: 28, bodyH: 18, cabin: 'M38 28 L52 10 H100 L120 28 Z', glass: 'M50 26 L58 14 H72 V26 Z M78 26 V14 H98 L110 26 Z' },
+{ name: t.minivan, cap: t.minivanCap, fit: g > 4, opacity: 1, desc: t.vDesc, price: usd(MINI), rtText: usd(RT_MINI), bg: '#B9472F', fg: '#FFF6E8', bodyY: 22, bodyH: 24, cabin: 'M26 22 L38 6 H130 Q142 6 148 22 Z', glass: 'M40 20 L46 10 H70 V20 Z M78 20 V10 H106 V20 Z M114 20 V10 H128 L136 20 Z' }
+];
+
+return {
+t,
+isHome: s.view === 'home', isTransfers: s.view === 'transfers', isBeaches: s.view === 'beaches', isTours: s.view === 'tours', isCooking: s.view === 'cooking', isPackages: s.view === 'packages', isPlan: s.view === 'plan', isSpa: s.view === 'spa', isCheckin: s.view === 'checkin', isApts: s.view === 'apartments', aptCards, isGuestCI: s.view === 'guestci',
+goGuestCI: go('guestci'), gcFields, gcCountries, gcPurposeChips, gcSourceChips, gcPropChips, gcGuestChips, gcHref, gcBtnOpacity: gcReady ? 1 : 0.45, gcHint: gcReady ? '' : t.gcNeed,
+gcSign: gc.sign || '', setGcSign: (e) => this.setState({ gc: Object.assign({}, s.gc, { sign: e.target.value }) }),
+gcAgreeOn: !!gc.agree, gcAgreeBg: gc.agree ? '#F2B544' : 'transparent', gcAgreeMark: gc.agree ? '✓' : '',
+toggleGcAgree: () => this.setState({ gc: Object.assign({}, s.gc, { agree: !s.gc.agree }) }),
+showBar: s.view !== 'home',
+goHome: go('home'), goApts: go('apartments'), goTransfers: go('transfers'), goBeaches: go('beaches'), goTours: go('tours'), goCooking: go('cooking'), goPackages: go('packages'), goPlan: go('plan'), goSpa: go('spa'), goCheckin: go('checkin'), goCheckout: go('plan', 'checkout'),
+planBtn: items.length ? t.myPlan + ' · ' + usd(total) : t.myPlan,
+beachCards, tileSub, spaRows, ciRows, ciRules,
+isEn: s.lang === 'en', isEs: s.lang === 'es',
+enBg: s.lang === 'en' ? '#F6EBD9' : 'transparent', enFg: s.lang === 'en' ? '#0B0B0B' : '#F6EBD9',
+esBg: s.lang === 'es' ? '#F6EBD9' : 'transparent', esFg: s.lang === 'es' ? '#0B0B0B' : '#F6EBD9',
+setEn: () => this.setState({ lang: 'en' }),
+setEs: () => this.setState({ lang: 'es' }),
+guestChips, packages, pkTitleB: t.pkTitleB,
+heroHint: g <= 4 ? t.vehicleSedan : t.vehicleMini,
+vehicles, combos, tour, tour2, payers, balanceText, balanceColor, modeChips, countChips, showCount: s.pmode !== 0 && g >= 2, mailtoPay,
+cname: s.cname, cemail: s.cemail, cwa: s.cwa, carr: s.carr,
+setCname: (e) => this.setState({ cname: e.target.value }), setCemail: (e) => this.setState({ cemail: e.target.value }), setCwa: (e) => this.setState({ cwa: e.target.value }), setCarr: (e) => this.setState({ carr: e.target.value }),
+dishes: t.dishes.map((d, i) => ({ ...d, span: '1 / -1', bg: i === 0 ? '#FFF6E8' : (i === 1 ? '#8A2F1C' : '#F2B544'), fg: i === 0 ? '#8A2F1C' : (i === 1 ? '#FFF6E8' : '#0B0B0B') })),
+included: t.included.map((label) => ({ label })),
+steps: t.steps,
+guestsText, dec: () => setG(g - 1), inc: () => setG(g + 1),
+tripChips, comboChips, classChips,
+vehicleHint: s.trip ? (g <= 4 ? t.vehicleSedan : t.vehicleMini) : '',
+classHint: incl ? t.classHintIncluded : t.classHintFree,
+items, hasItems: items.length > 0, noItems: items.length === 0,
+totalText: usd(total), mailto,
+addTransfer: (e) => { go('plan')(e); if (!s.trip) this.setState({ trip: 1 }); },
+addClass: (e) => { go('plan')(e); if (!s.cls) this.setState({ cls: 1 }); }
+};
+}
+}
+
+DCStart(Component);
+</script>
+</body>
+</html>

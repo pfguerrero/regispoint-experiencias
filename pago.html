@@ -22,6 +22,7 @@ h1 em{font-style:italic;font-weight:500;color:#F2B544}
 .card{background:#F6EBD9;color:#0B0B0B;padding:36px 36px 32px;display:flex;flex-direction:column;gap:22px}
 .lbl{font-size:15px;font-weight:600;letter-spacing:.14em;color:#8a3a1d;text-transform:uppercase}
 .amt{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(56px,11vw,96px);line-height:1;letter-spacing:-.03em}
+.desc{font-size:17px;line-height:1.45;opacity:.8;margin-top:-8px;text-wrap:pretty}
 .who{display:flex;flex-direction:column;gap:4px;font-size:18px;font-weight:500;padding-top:18px;border-top:1.5px solid rgba(11,11,11,.18)}
 .who span{opacity:.7;font-size:16px}
 .btn{display:flex;align-items:center;justify-content:center;min-height:60px;padding:0 28px;border-radius:999px;border:0;background:#F2B544;color:#0B0B0B;font-family:inherit;font-size:19px;font-weight:600;cursor:pointer;transition:transform .15s ease,opacity .2s}
@@ -53,6 +54,7 @@ h1 em{font-style:italic;font-weight:500;color:#F2B544}
     <section class="card" id="card">
       <div class="lbl" id="totalLbl"></div>
       <div class="amt" id="amount">US$–</div>
+      <div class="desc hidden" id="desc"></div>
       <div class="who hidden" id="who"><div id="whoName"></div><span id="whoEmail"></span></div>
       <button class="btn" id="pay" type="button" disabled></button>
       <div class="status" id="status" role="status" aria-live="polite"></div>
@@ -113,6 +115,8 @@ h1 em{font-style:italic;font-weight:500;color:#F2B544}
       return;
     }
     $('amount').textContent = usd(value);
+    var ds = d.desc ? String(d.desc).slice(0, 200) : '';
+    if (ds) { $('desc').textContent = ds; $('desc').classList.remove('hidden'); }
     var nm = d.name ? String(d.name).slice(0, 80) : '', em = d.email ? String(d.email).slice(0, 120) : '';
     if (nm || em) { $('whoName').textContent = nm; $('whoEmail').textContent = em; $('who').classList.remove('hidden'); }
     $('pay').disabled = false; ready = true; setStatus('');

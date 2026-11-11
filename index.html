@@ -1309,9 +1309,9 @@ lines.push('', t.mailGuests + ': ' + g, t.mailTotal + ': ' + usd(total), '', t.m
 const mailto = 'mailto:regispoint51@gmail.com?subject=' + encodeURIComponent(t.mailSubject) + '&body=' + encodeURIComponent(lines.join('\n'));
 
 
-const PAY_HANDLE = 'regispoint';
 const WIX_PAY_URL = 'https://www.regispoint.com/pago';
-const wixPayHref = (amt, payer) => WIX_PAY_URL + '?amount=' + encodeURIComponent(amt) + '&name=' + encodeURIComponent(payer || s.cname || '') + '&email=' + encodeURIComponent(s.cemail || '') + '&lang=' + encodeURIComponent(s.lang || 'en');
+const payDesc = (items.map((it) => it.label).join(' + ') + ' · ' + guestsText).slice(0, 180);
+const wixPayHref = (amt, payer) => WIX_PAY_URL + '?amount=' + encodeURIComponent(amt) + '&name=' + encodeURIComponent(payer || s.cname || '') + '&email=' + encodeURIComponent(s.cemail || '') + '&lang=' + encodeURIComponent(s.lang || 'en') + '&desc=' + encodeURIComponent(payDesc);
 const n = s.pmode === 0 ? 1 : Math.max(2, Math.min(s.pn, g, 8));
 const cents = Math.round(total * 100);
 const base = Math.floor(cents / n);
@@ -1327,9 +1327,7 @@ const payers = amtCents.map((c, i) => {
 const nm = i === 0 ? s.cname : s.pnames[i];
 const display = s.pmode === 0 ? s.cname : s.pnames[i];
 const ok = c > 0 && (s.pmode !== 2 || diff === 0);
-const handleOk = PAY_HANDLE !== '';
 const amt = (c / 100).toFixed(2);
-const reqBody = t.payMailIntro + '\n\n' + items.map((it) => '- ' + it.label + (it.amount ? ': ' + it.amount : '')).join('\n') + '\n\n' + t.mailGuests + ': ' + g + '\n' + t.mailTotal + ': ' + usd(total) + '\n' + t.payMailShares + ': ' + (display || (t.payNameN + ' ' + (i + 1))) + ' ' + fmt(c) + '\n' + t.payMailName + ': ' + (s.cname || '') + '\n' + t.payMailEmail + ': ' + (s.cemail || '') + '\n' + t.payMailWa + ': ' + (s.cwa || '') + '\n' + t.payMailArr + ': ' + (s.carr || '');
 return {
 nameLabel: s.pmode === 0 ? t.cName : t.payNameN + ' ' + (i + 1),
 name: s.pmode === 0 ? s.cname : s.pnames[i],
@@ -1339,10 +1337,10 @@ amtVal: s.pamts[i],
 setAmt: (e) => { const a = s.pamts.slice(); a[i] = e.target.value; this.setState({ pamts: a }); },
 amountText: fmt(c),
 payTarget: ok ? '_top' : '_self',
-payHref: !ok ? '#checkout' : (WIX_PAY_URL ? wixPayHref(amt, display) : handleOk ? 'https://www.paypal.me/' + PAY_HANDLE + '/' + amt + 'USD' : 'mailto:regispoint51@gmail.com?subject=' + encodeURIComponent(t.mailSubject) + '&body=' + encodeURIComponent(reqBody)),
-btnText: (WIX_PAY_URL || handleOk) ? t.payBtn + ' ' + fmt(c) : t.payReq + ' · ' + fmt(c),
+payHref: !ok ? '#checkout' : wixPayHref(amt, display),
+btnText: t.payBtn + ' ' + fmt(c),
 btnOpacity: ok ? 1 : 0.45,
-waHref: 'https://wa.me/?text=' + encodeURIComponent(t.payWaMsg + ' ' + fmt(c) + (WIX_PAY_URL ? ' ' + wixPayHref(amt, display) : handleOk ? ' https://www.paypal.me/' + PAY_HANDLE + '/' + amt + 'USD' : ''))
+waHref: 'https://wa.me/?text=' + encodeURIComponent(t.payWaMsg + ' ' + fmt(c) + ' ' + wixPayHref(amt, display))
 };
 });
 const balanceText = s.pmode !== 2 ? '' : (diff === 0 ? t.payOk : (diff > 0 ? t.payLeft + ' ' + fmt(diff) : t.payOver + ' ' + fmt(-diff)));

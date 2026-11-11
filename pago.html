@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regis Point · Pago</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#0B0B0B}
+body{font-family:'Jost',system-ui,sans-serif;color:#F6EBD9;-webkit-font-smoothing:antialiased}
+.wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:40px 24px 64px}
+.top{width:100%;max-width:1100px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.top img{height:34px;width:auto}
+.back{color:#F6EBD9;text-decoration:none;font-size:16px;font-weight:500;border:1.5px solid rgba(246,235,217,.5);border-radius:999px;padding:10px 20px;transition:border-color .2s}
+.back:hover{border-color:#F2B544}
+main{width:100%;max-width:640px;margin:auto;padding:56px 0 8px;display:flex;flex-direction:column;gap:32px}
+.eyebrow{font-size:15px;font-weight:600;letter-spacing:.26em;color:#F2B544}
+h1{margin:0;font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(44px,8vw,76px);line-height:.98;letter-spacing:-.025em;text-wrap:balance}
+h1 em{font-style:italic;font-weight:500;color:#F2B544}
+.card{background:#F6EBD9;color:#0B0B0B;padding:36px 36px 32px;display:flex;flex-direction:column;gap:22px}
+.lbl{font-size:15px;font-weight:600;letter-spacing:.14em;color:#8a3a1d;text-transform:uppercase}
+.amt{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(56px,11vw,96px);line-height:1;letter-spacing:-.03em}
+.who{display:flex;flex-direction:column;gap:4px;font-size:18px;font-weight:500;padding-top:18px;border-top:1.5px solid rgba(11,11,11,.18)}
+.who span{opacity:.7;font-size:16px}
+.btn{display:flex;align-items:center;justify-content:center;min-height:60px;padding:0 28px;border-radius:999px;border:0;background:#F2B544;color:#0B0B0B;font-family:inherit;font-size:19px;font-weight:600;cursor:pointer;transition:transform .15s ease,opacity .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn:disabled{opacity:.5;cursor:default;transform:none}
+.btn:focus-visible,.back:focus-visible{outline:3px solid #F2B544;outline-offset:3px}
+.note{font-size:15px;line-height:1.5;opacity:.75;text-wrap:pretty}
+.status{font-size:18px;line-height:1.45;font-weight:500;min-height:0}
+.status.err{color:#b3261e}
+.card.done{gap:14px}
+.hidden{display:none !important}
+.foot{margin-top:40px;font-size:14px;letter-spacing:.04em;opacity:.55;text-align:center}
+@media (max-width:520px){.card{padding:26px 22px}.top img{height:28px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a href="https://www.regispoint.com" target="_top" aria-label="Regis Point"><img src="cbaa8357ee0e737e7bfb1f0ea6cfa8a4.png" alt="Regis Point"></a>
+    <a class="back" id="back" href="https://www.regispoint.com" target="_top"></a>
+  </div>
+
+  <main>
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div class="eyebrow" id="eyebrow"></div>
+      <h1 id="title"></h1>
+    </div>
+
+    <section class="card" id="card">
+      <div class="lbl" id="totalLbl"></div>
+      <div class="amt" id="amount">US$–</div>
+      <div class="who hidden" id="who"><div id="whoName"></div><span id="whoEmail"></span></div>
+      <button class="btn" id="pay" type="button" disabled></button>
+      <div class="status" id="status" role="status" aria-live="polite"></div>
+      <div class="note" id="note"></div>
+    </section>
+  </main>
+
+  <div class="foot">Regis Point · José Reyes 51, Zona Colonial, Santo Domingo</div>
+</div>
+
+<script>
+(function () {
+  var T = {
+    es: {
+      eyebrow: 'PAGO SEGURO', titleA: 'Casi listo.', titleB: 'Un último paso.',
+      total: 'Total a pagar', pay: 'Pagar', back: '← Volver a Regis Point',
+      note: 'El pago se procesa de forma segura con Wix Payments. Nunca vemos ni guardamos los datos de tu tarjeta. Tu concierge te confirma por email.',
+      loading: 'Preparando tu pago…', missing: 'Falta el monto del pago. Vuelve a Regis Point y genera el enlace otra vez.',
+      busy: 'Abriendo el pago seguro…', ok: 'Pago recibido', okText: 'Gracias. Tu concierge te escribe pronto para confirmar todo.',
+      cancel: 'El pago no se completó. Puedes intentarlo de nuevo.', err: 'No pudimos abrir el pago. Inténtalo de nuevo en un momento.'
+    },
+    en: {
+      eyebrow: 'SECURE PAYMENT', titleA: 'Almost there.', titleB: 'One last step.',
+      total: 'Total to pay', pay: 'Pay', back: '← Back to Regis Point',
+      note: 'Payment is processed securely by Wix Payments. We never see or store your card details. Your concierge will confirm by email.',
+      loading: 'Getting your payment ready…', missing: 'The payment amount is missing. Go back to Regis Point and create the link again.',
+      busy: 'Opening secure payment…', ok: 'Payment received', okText: 'Thank you. Your concierge will write to you shortly to confirm everything.',
+      cancel: 'The payment was not completed. You can try again.', err: 'We could not open the payment. Please try again in a moment.'
+    }
+  };
+  var $ = function (id) { return document.getElementById(id); };
+  var lang = 'es', value = 0, ready = false;
+
+  function usd(v) { return 'US$' + (Math.round(v * 100) % 100 === 0 ? String(Math.round(v)) : v.toFixed(2)); }
+  function setStatus(msg, isErr) { var s = $('status'); s.textContent = msg || ''; s.className = 'status' + (isErr ? ' err' : ''); }
+
+  function paint() {
+    var t = T[lang];
+    document.documentElement.lang = lang;
+    $('eyebrow').textContent = t.eyebrow;
+    var h = $('title'); h.textContent = t.titleA + ' ';
+    var em = document.createElement('em'); em.textContent = t.titleB; h.appendChild(em);
+    $('totalLbl').textContent = t.total;
+    $('back').textContent = t.back;
+    $('note').textContent = t.note;
+    $('pay').textContent = t.pay + (value >= 1 ? ' ' + usd(value) : '');
+  }
+
+  function init(d) {
+    lang = d && d.lang === 'en' ? 'en' : 'es';
+    value = Number(d && d.amount);
+    var ok = isFinite(value) && value >= 1;
+    paint();
+    if (!ok) {
+      $('amount').textContent = 'US$–';
+      $('pay').classList.add('hidden');
+      setStatus(T[lang].missing, true);
+      return;
+    }
+    $('amount').textContent = usd(value);
+    var nm = d.name ? String(d.name).slice(0, 80) : '', em = d.email ? String(d.email).slice(0, 120) : '';
+    if (nm || em) { $('whoName').textContent = nm; $('whoEmail').textContent = em; $('who').classList.remove('hidden'); }
+    $('pay').disabled = false; ready = true; setStatus('');
+  }
+
+  window.addEventListener('message', function (e) {
+    if (e.source !== window.parent) return;
+    var d = e.data || {};
+    var t = T[lang];
+    if (d.type === 'init') init(d);
+    else if (d.type === 'busy') { $('pay').disabled = true; setStatus(t.busy); }
+    else if (d.type === 'cancel') { $('pay').disabled = false; setStatus(t.cancel, true); }
+    else if (d.type === 'error') { $('pay').disabled = false; setStatus(t.err, true); }
+    else if (d.type === 'success') {
+      var c = $('card'); c.className = 'card done';
+      c.innerHTML = '';
+      var l = document.createElement('div'); l.className = 'lbl'; l.textContent = t.ok;
+      var a = document.createElement('div'); a.className = 'amt'; a.textContent = usd(value);
+      var p = document.createElement('div'); p.className = 'status'; p.textContent = t.okText;
+      c.appendChild(l); c.appendChild(a); c.appendChild(p);
+    }
+  });
+
+  $('pay').addEventListener('click', function () {
+    if (!ready) return;
+    $('pay').disabled = true; setStatus(T[lang].busy);
+    window.parent.postMessage({ type: 'pay' }, '*');
+  });
+
+  paint(); setStatus(T[lang].loading);
+  if (window.parent === window) { init({ lang: 'es' }); }
+  else window.parent.postMessage({ type: 'ready' }, '*');
+})();
+</script>
+</body>
+</html>

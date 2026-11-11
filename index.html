@@ -1311,7 +1311,7 @@ const mailto = 'mailto:regispoint51@gmail.com?subject=' + encodeURIComponent(t.m
 
 const PAY_HANDLE = 'regispoint';
 const WIX_PAY_URL = 'https://www.regispoint.com/pago';
-const wixPayHref = (amt, payer) => WIX_PAY_URL + '?amount=' + encodeURIComponent(amt) + '&name=' + encodeURIComponent(payer || s.cname || '') + '&email=' + encodeURIComponent(s.cemail || '');
+const wixPayHref = (amt, payer) => WIX_PAY_URL + '?amount=' + encodeURIComponent(amt) + '&name=' + encodeURIComponent(payer || s.cname || '') + '&email=' + encodeURIComponent(s.cemail || '') + '&lang=' + encodeURIComponent(s.lang || 'en');
 const n = s.pmode === 0 ? 1 : Math.max(2, Math.min(s.pn, g, 8));
 const cents = Math.round(total * 100);
 const base = Math.floor(cents / n);

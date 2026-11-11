@@ -1310,6 +1310,8 @@ const mailto = 'mailto:regispoint51@gmail.com?subject=' + encodeURIComponent(t.m
 
 
 const PAY_HANDLE = 'regispoint';
+const WIX_PAY_URL = 'https://www.regispoint.com/pago';
+const wixPayHref = (amt, payer) => WIX_PAY_URL + '?amount=' + encodeURIComponent(amt) + '&name=' + encodeURIComponent(payer || s.cname || '') + '&email=' + encodeURIComponent(s.cemail || '');
 const n = s.pmode === 0 ? 1 : Math.max(2, Math.min(s.pn, g, 8));
 const cents = Math.round(total * 100);
 const base = Math.floor(cents / n);
@@ -1336,10 +1338,10 @@ editable: s.pmode === 2, fixed: s.pmode !== 2,
 amtVal: s.pamts[i],
 setAmt: (e) => { const a = s.pamts.slice(); a[i] = e.target.value; this.setState({ pamts: a }); },
 amountText: fmt(c),
-payHref: !ok ? '#checkout' : (handleOk ? 'https://www.paypal.me/' + PAY_HANDLE + '/' + amt + 'USD' : 'mailto:regispoint51@gmail.com?subject=' + encodeURIComponent(t.mailSubject) + '&body=' + encodeURIComponent(reqBody)),
-btnText: handleOk ? t.payBtn + ' ' + fmt(c) : t.payReq + ' · ' + fmt(c),
+payHref: !ok ? '#checkout' : (WIX_PAY_URL ? wixPayHref(amt, display) : handleOk ? 'https://www.paypal.me/' + PAY_HANDLE + '/' + amt + 'USD' : 'mailto:regispoint51@gmail.com?subject=' + encodeURIComponent(t.mailSubject) + '&body=' + encodeURIComponent(reqBody)),
+btnText: (WIX_PAY_URL || handleOk) ? t.payBtn + ' ' + fmt(c) : t.payReq + ' · ' + fmt(c),
 btnOpacity: ok ? 1 : 0.45,
-waHref: 'https://wa.me/?text=' + encodeURIComponent(t.payWaMsg + ' ' + fmt(c) + (handleOk ? ' https://www.paypal.me/' + PAY_HANDLE + '/' + amt + 'USD' : ''))
+waHref: 'https://wa.me/?text=' + encodeURIComponent(t.payWaMsg + ' ' + fmt(c) + (WIX_PAY_URL ? ' ' + wixPayHref(amt, display) : handleOk ? ' https://www.paypal.me/' + PAY_HANDLE + '/' + amt + 'USD' : ''))
 };
 });
 const balanceText = s.pmode !== 2 ? '' : (diff === 0 ? t.payOk : (diff > 0 ? t.payLeft + ' ' + fmt(diff) : t.payOver + ' ' + fmt(-diff)));

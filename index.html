@@ -1627,6 +1627,14 @@ addClass: (e) => { go('plan')(e); if (!s.cls) this.setState({ cls: 1 }); }
 }
 
 DCStart(Component);
+document.addEventListener('click', function (ev) {
+  var a = ev.target && ev.target.closest ? ev.target.closest('a[href]') : null;
+  if (!a || window.parent === window) return;
+  var h = a.getAttribute('href') || '';
+  if (h.indexOf(WIX_PAY_URL) !== 0) return;
+  ev.preventDefault();
+  window.parent.postMessage({ type: 'navigate', url: h }, '*');
+}, true);
 </script>
 </body>
 </html>

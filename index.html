@@ -956,7 +956,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #F2B544;outline-offset:3p
 <div style="flex: 0 1 150px; display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 500">{{t.payShare}}
 <div style="min-height: 52px; display: flex; align-items: center; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 32px">{{p.amountText}}</div></div>
 </sc-if>
-<a class="btn" href="{{p.payHref}}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; justify-content: center; flex: 0 1 auto; min-height: 52px; padding: 0 26px; border-radius: 999px; background: #F2B544; color: #0B0B0B; font-size: 17px; font-weight: 600; text-decoration: none; text-align: center; opacity: {{p.btnOpacity}}">{{p.btnText}}</a>
+<a class="btn" href="{{p.payHref}}" target="{{p.payTarget}}" style="display: inline-flex; align-items: center; justify-content: center; flex: 0 1 auto; min-height: 52px; padding: 0 26px; border-radius: 999px; background: #F2B544; color: #0B0B0B; font-size: 17px; font-weight: 600; text-decoration: none; text-align: center; opacity: {{p.btnOpacity}}">{{p.btnText}}</a>
 <a href="{{p.waHref}}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 52px; font-size: 16px; font-weight: 600; color: #F2B544">{{t.payWa}}</a>
 </div>
 </sc-for>
@@ -1338,6 +1338,7 @@ editable: s.pmode === 2, fixed: s.pmode !== 2,
 amtVal: s.pamts[i],
 setAmt: (e) => { const a = s.pamts.slice(); a[i] = e.target.value; this.setState({ pamts: a }); },
 amountText: fmt(c),
+payTarget: ok ? '_top' : '_self',
 payHref: !ok ? '#checkout' : (WIX_PAY_URL ? wixPayHref(amt, display) : handleOk ? 'https://www.paypal.me/' + PAY_HANDLE + '/' + amt + 'USD' : 'mailto:regispoint51@gmail.com?subject=' + encodeURIComponent(t.mailSubject) + '&body=' + encodeURIComponent(reqBody)),
 btnText: (WIX_PAY_URL || handleOk) ? t.payBtn + ' ' + fmt(c) : t.payReq + ' · ' + fmt(c),
 btnOpacity: ok ? 1 : 0.45,
